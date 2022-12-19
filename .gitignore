@@ -1,0 +1,27 @@
+# OS files
+.DS_Store
+.history
+
+# editors
+.*.swp
+.idea
+.vscode
+.vs
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# build
+.oclif.manifest.json
+node_modules/
+npm-debug.log
+*.log
+logs/
+tsconfig.tsbuildinfo
+build/
+
+# environment
+.env
+
+# tests
+__reports/
