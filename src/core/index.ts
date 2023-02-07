@@ -1,10 +1,11 @@
 import { Config } from './Config';
 import { Registry } from './Registry';
-import { DocumentHandler } from './DocumentHandler';
-import { Generator } from './Generator';
+import { DocumentHandler } from '../DocumentHandler';
+import { Generator } from '../Generator';
 
-export const main = async (userConfig: object) => {
-    const config = new Config(userConfig);
+type Generate = (config: Config) => void;
+
+export const generate: Generate = async config => {
     const registry = new Registry({ config });
 
     const documentHandler = new DocumentHandler(registry);

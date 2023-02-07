@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Document": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "remote"
+                            ],
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "path": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "enum": [
+                                "local"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        }
+    },
+    "properties": {
+        "document": {
+            "$ref": "#/definitions/Document"
+        },
+        "output": {
+            "type": "string"
+        },
+        "pathWhitelist": {
+            "items": {
+                "properties": {
+                    "regExp": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "type": "object"
+}

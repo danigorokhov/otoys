@@ -1,9 +1,18 @@
 import { mkdir, writeFile } from 'fs/promises';
-import { ComponentsObject, ContentObject, isReferenceObject, OpenAPIObject, PathItemObject, ReferenceObject, ResponseObject, SchemaObject } from 'openapi3-ts';
+import {
+    ComponentsObject,
+    ContentObject,
+    isReferenceObject,
+    OpenAPIObject,
+    PathItemObject,
+    ReferenceObject,
+    ResponseObject,
+    SchemaObject,
+} from 'openapi3-ts';
 import { resolve } from 'path';
 import ts, { factory } from 'typescript';
 
-import { Registry } from './Registry';
+import { Registry } from './core/Registry';
 
 // TODO extract to helpers
 type GetSchemaNameFromRef = ($ref: string) => string;

@@ -5,9 +5,10 @@
   "main": "build/index.js",
   "scripts": {
     "prepare": "rimraf build && npm run build",
-    "build": "tsc",
+    "build": "tsc && npm run generate:schema:config",
     "dev": "tsc --watch",
-    "test": "node cli/index generate --config otoysrc.json"
+    "test": "node cli/index generate",
+    "generate:schema:config": "typescript-json-schema src/core/Config.ts ConfigOptions -o src/cli/config/schema.json"
   },
   "bin": {
     "otoys": "./cli/index.js"
