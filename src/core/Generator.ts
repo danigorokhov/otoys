@@ -12,7 +12,7 @@ import {
 import { resolve } from 'path';
 import ts, { factory } from 'typescript';
 
-import { Registry } from './core/Registry';
+import { Registry } from './Registry';
 
 // TODO extract to helpers
 type GetSchemaNameFromRef = ($ref: string) => string;

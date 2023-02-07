@@ -1,7 +1,7 @@
 import { Config } from './Config';
 import { Registry } from './Registry';
-import { DocumentHandler } from '../DocumentHandler';
-import { Generator } from '../Generator';
+import { DocumentHandler } from './DocumentHandler';
+import { Generator } from './Generator';
 
 type Generate = (config: Config) => void;
 

@@ -8,7 +8,7 @@ import { resolve } from 'path';
 import { readFile } from 'fs/promises';
 
 // // import OpenApiSchemaV3 from './schemas/v3.json';
-import { Registry } from './core/Registry';
+import { Registry } from './Registry';
 
 // TODO to registry
 const ajv = new Ajv({ strictTypes: false });
