@@ -6,9 +6,5 @@ module.exports = {
         path: './src/petstore3.json'
     },
     output: './output',
-    pathWhitelist: [
-        {
-            regExp: '^/user'
-        }
-    ],
+    pathWhitelist: '^/user',
 };

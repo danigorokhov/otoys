@@ -1,7 +1,3 @@
-type Path = {
-    regExp: string;
-};
-
 type DocumentRemote = {
     type: 'remote';
     url: string;
@@ -16,13 +12,13 @@ type Document = DocumentRemote | DocumentLocal;
 export type ConfigOptions = {
     document: Document;
     output: string;
-    pathWhitelist?: Path[];
+    pathWhitelist?: string;
 };
 
 export class Config {
     public document: Document;
     public output: string;
-    public pathWhitelist?: Path[];
+    public pathWhitelist?: string;
 
     constructor(configOptions: ConfigOptions) {
         this.document = configOptions.document;

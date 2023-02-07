@@ -46,74 +46,73 @@ export class Generator {
     private gatherSchemasToGenerate(): SchemaEntry[] {
         const documentSchemas = this.document.components?.schemas || {};
 
+        const { pathWhitelist } = this.registry.config;
+
         // TODO rewrite
-        if (this.registry.config.pathWhitelist?.length && this.registry.config.pathWhitelist.length > 0) {
+        if (pathWhitelist) {
+            const pathRegExp = new RegExp(pathWhitelist);
             const schemaNames: Set<SchemaName> = new Set();
 
-            this.registry.config.pathWhitelist.forEach(pathRule => {
-                const regExp = new RegExp(pathRule.regExp);
+            // TODO handle any for descriptor
+            const pathEntries: PathEntry[] = Object.entries(this.document.paths);
+            pathEntries.forEach(([path, pathDescriptor]) => {
+                if (!path.match(pathRegExp)) {
+                    return;
+                }
 
-                // TODO handle any for descriptor
-                const pathEntries: PathEntry[] = Object.entries(this.document.paths);
-                pathEntries.forEach(([path, pathDescriptor]) => {
-                    if (!path.match(regExp)) {
+                const operationObjects = [
+                    pathDescriptor.get,
+                    pathDescriptor.put,
+                    pathDescriptor.post,
+                    pathDescriptor.delete,
+                    pathDescriptor.options,
+                    pathDescriptor.head,
+                    pathDescriptor.patch,
+                    pathDescriptor.trace,
+                ];
+
+                // TODO requestBody + responses
+                operationObjects.forEach(operationObject => {
+                    if (!operationObject) {
                         return;
                     }
 
-                    const operationObjects = [
-                        pathDescriptor.get,
-                        pathDescriptor.put,
-                        pathDescriptor.post,
-                        pathDescriptor.delete,
-                        pathDescriptor.options,
-                        pathDescriptor.head,
-                        pathDescriptor.patch,
-                        pathDescriptor.trace,
-                    ];
+                    const contentObjects: ContentObject[] = [];
 
-                    // TODO requestBody + responses
-                    operationObjects.forEach(operationObject => {
-                        if (!operationObject) {
+                    // TODO handle any for keys
+                    const responseDescriptors: (ResponseObject | ReferenceObject)[] = Object.values(operationObject.responses);
+                    responseDescriptors.forEach(descriptor => {
+                        // TODO maybe ref isn't schema
+                        if (isReferenceObject(descriptor)) {
+                            schemaNames.add(getSchemaNameFromRef(descriptor.$ref));
                             return;
                         }
 
-                        const contentObjects: ContentObject[] = [];
+                        if (descriptor.content) {
+                            contentObjects.push(descriptor.content);
+                        }
+                    });
 
-                        // TODO handle any for keys
-                        const responseDescriptors: (ResponseObject | ReferenceObject)[] = Object.values(operationObject.responses);
-                        responseDescriptors.forEach(descriptor => {
-                            // TODO maybe ref isn't schema
-                            if (isReferenceObject(descriptor)) {
-                                schemaNames.add(getSchemaNameFromRef(descriptor.$ref));
-                                return;
-                            }
+                    if (operationObject.requestBody) {
+                        if (isReferenceObject(operationObject.requestBody)) {
+                            schemaNames.add(getSchemaNameFromRef(operationObject.requestBody.$ref));
+                        } else {
+                            contentObjects.push(operationObject.requestBody.content);
+                        }
+                    }
 
-                            if (descriptor.content) {
-                                contentObjects.push(descriptor.content);
-                            }
-                        });
-
-                        if (operationObject.requestBody) {
-                            if (isReferenceObject(operationObject.requestBody)) {
-                                schemaNames.add(getSchemaNameFromRef(operationObject.requestBody.$ref));
-                            } else {
-                                contentObjects.push(operationObject.requestBody.content);
-                            }
+                    const mediaTypeObjects = contentObjects.flatMap(descriptor => Object.values(descriptor));
+                    mediaTypeObjects.forEach(object => {
+                        if (!object.schema) {
+                            return;
                         }
 
-                        const mediaTypeObjects = contentObjects.flatMap(descriptor => Object.values(descriptor));
-                        mediaTypeObjects.forEach(object => {
-                            if (!object.schema) {
-                                return;
-                            }
+                        if (isReferenceObject(object.schema)) {
+                            schemaNames.add(getSchemaNameFromRef(object.schema.$ref));
+                            return;
+                        }
 
-                            if (isReferenceObject(object.schema)) {
-                                schemaNames.add(getSchemaNameFromRef(object.schema.$ref));
-                                return;
-                            }
-
-                            // TODO add object.schema to types. Now it is ignoring since all schemas expected in components.schemas
-                        });
+                        // TODO add object.schema to types. Now it is ignoring since all schemas expected in components.schemas
                     });
                 });
             });

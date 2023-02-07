@@ -42,16 +42,9 @@
             "type": "string"
         },
         "pathWhitelist": {
-            "items": {
-                "properties": {
-                    "regExp": {
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "type": "array"
+            "type": "string"
         }
     },
     "type": "object"
 }
+
