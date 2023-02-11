@@ -6,6 +6,7 @@ import { Generator } from './Generator';
 type Generate = (config: Config) => void;
 
 export const generate: Generate = async config => {
+    // TODO to pure config
     const registry = new Registry({ config });
 
     const documentHandler = new DocumentHandler(registry);

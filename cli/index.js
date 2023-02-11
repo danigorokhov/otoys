@@ -14,6 +14,7 @@ require('yargs/yargs')(hideBin(process.argv))
         // TODO add options
         // (yargs) => yargs.default('commits', []),
         async (options) => {
+            // TODO handle async errors
             await generate(options.argv);
 
             // TODO cool success message
