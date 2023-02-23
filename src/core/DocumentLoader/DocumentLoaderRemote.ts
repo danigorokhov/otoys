@@ -15,10 +15,10 @@ export class DocumentLoaderRemote extends DocumentLoaderBase {
         this.url = options.url;
     }
 
-    async load() {
+    public async load() {
         const documentFetched = await got(this.url).json();
 
-        const documentValidated = this.validate(documentFetched);
+        const documentValidated = DocumentLoaderRemote.validate(documentFetched);
 
         return documentValidated;
     }

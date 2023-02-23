@@ -16,7 +16,7 @@ export class DocumentLoaderLocal extends DocumentLoaderBase {
         this.path = options.path;
     }
 
-    async load() {
+    public async load() {
         const pathResolved = resolve(process.cwd(), this.path);
 
         let documentType: DocumentType;
@@ -27,13 +27,13 @@ export class DocumentLoaderLocal extends DocumentLoaderBase {
         } else if (documentExtension === '.yaml' || documentExtension === '.yml') {
             documentType = 'yaml';
         } else {
-            throw new Error(`DocumentLoader: document cannot be parsed, unsupported file extension ${documentExtension}`);
+            throw new Error(`DocumentLoaderError: document cannot be parsed, unsupported file extension ${documentExtension}`);
         }
 
         const documentRaw = await readFile(pathResolved, { encoding: 'utf8' });
 
-        const documentParsed = this.parse(documentRaw, documentType);
-        const documentValidated = this.validate(documentParsed);
+        const documentParsed = DocumentLoaderLocal.parse(documentRaw, documentType);
+        const documentValidated = DocumentLoaderLocal.validate(documentParsed);
 
         return documentValidated;
     }

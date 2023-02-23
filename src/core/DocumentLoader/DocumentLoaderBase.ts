@@ -4,12 +4,12 @@ import YAML from 'yaml';
 export type DocumentType = 'yaml' | 'json';
 
 export abstract class DocumentLoaderBase {
-    protected validate(document: unknown) {
+    static validate(document: unknown) {
         // TODO support validation
         return document as OpenAPIObject;
     }
 
-    protected parse(document: string, type: DocumentType) {
+    static parse(document: string, type: DocumentType) {
         let documentParsed: unknown;
 
         switch (type) {
@@ -20,7 +20,7 @@ export abstract class DocumentLoaderBase {
                 documentParsed = JSON.parse(document);
                 break;
             } default: {
-                throw new Error(`DocumentLoader: unknown document type "${type}"`);
+                throw new Error(`DocumentLoaderError: unknown document type "${type}"`);
             }
         }
 
