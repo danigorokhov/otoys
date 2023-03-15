@@ -1,6 +1,7 @@
 import { OpenAPIObject } from 'openapi3-ts';
 
 import { Registry } from '../Registry';
+import { PathCollector } from './PathCollector';
 
 export class TypesGeneratorV3 {
     constructor(private registry: Registry, private document: OpenAPIObject) {}
@@ -13,24 +14,37 @@ export class TypesGeneratorV3 {
         this.print();
     }
 
-    // TODO rename
     private prepare() {
-        this.collectPaths();
+        const collector = new PathCollector(
+            this.document.paths,
+            this.registry.config.pathWhitelist,
+        );
+        const _collectedPaths = collector.collect();
+
         this.resolveSchemas();
     }
-    private collectPaths() {}
-    // TODO Particular order = BFS, which we will reverted to first generate base types
-    private resolveSchemas() {}
 
+    // TODO Particular order = BFS, which we will reverted to first generate base types
+    private resolveSchemas() {
+        throw new Error("Not implemented resolveSchemas");
+    }
+
+    // TODO rename
     private createASTNodes() {
         this.createASTNodeFromSchema();
     }
-    private createASTNodeFromSchema() {}
+    private createASTNodeFromSchema() {
+        throw new Error("Not implemented createASTNodeFromSchema");
+    }
 
     private print() {
-        this.createOutputFile();
         this.createASTPrinter();
+        this.createOutputFile();
     }
-    private createOutputFile() {}
-    private createASTPrinter() {}
+    private createASTPrinter() {
+        throw new Error("Not implemented createASTPrinter");
+    }
+    private createOutputFile() {
+        throw new Error("Not implemented createOutputFile");
+    }
 }
