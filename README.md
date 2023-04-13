@@ -8,7 +8,7 @@ Development in progress!
 
 ## How to start
 
-1. Swithc to project NodeJS version
+1. Switch to project NodeJS version
 
 ```bash
 nvm use
@@ -22,7 +22,7 @@ npm ci
 
 3. Describe `otoysrc.json` configuration file
 
-4. Run `otoys` as npm script
+4. Run `otoys` via npm script
 
 ```bash
 npm run test:e2e
