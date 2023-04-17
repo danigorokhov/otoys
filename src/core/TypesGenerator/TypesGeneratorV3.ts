@@ -24,7 +24,7 @@ export class TypesGeneratorV3 {
         this.resolveSchemas();
     }
 
-    // TODO Particular order = BFS, which we will reverted to first generate base types
+    // TODO Particular order = BFS, which we will reverted to firstly generate base types
     private resolveSchemas() {
         throw new Error("Not implemented resolveSchemas");
     }
