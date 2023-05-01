@@ -19,6 +19,8 @@ module.exports = {
     ],
     rules: {
         '@typescript-eslint/no-var-requires': 'off',
+        'semi': 'off',
+        '@typescript-eslint/semi': 'error',
         indent: ['error', 4,
             {
                 flatTernaryExpressions: false,

@@ -337,7 +337,7 @@ export class Generator {
 
             const sourceFile = ts.createSourceFile(
                 schemaFileName,
-                "",
+                '',
                 ts.ScriptTarget.ESNext, // TODO setup via config
                 true, // TODO investigate what is it
                 ts.ScriptKind.TS,

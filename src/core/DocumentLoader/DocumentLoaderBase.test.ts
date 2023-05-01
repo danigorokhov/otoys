@@ -1,6 +1,6 @@
-import { expect, describe, it } from '@jest/globals';
 import { OpenAPIObject } from 'openapi3-ts';
 import { YAMLParseError } from 'yaml';
+import { expect, describe, it } from '@jest/globals';
 
 import { DocumentLoaderBase } from './DocumentLoaderBase';
 
@@ -33,7 +33,7 @@ describe('DocumentLoader -> DocumentLoaderBase', () => {
         const documentRaw = 'incorrectJson';
 
         expect(() => TestDocumentLoaderBase.parse(documentRaw, 'json')).toThrowError(SyntaxError);
-    })
+    });
 
     it('should parse yaml document', () => {
         const documentRaw = 'openapi: 3.0.2\ninfo:\n    title: Swagger Petstore - OpenAPI 3.0';

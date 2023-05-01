@@ -90,7 +90,7 @@ describe('DocumentLoader -> DocumentLoaderLocal', () => {
         await documentLoader.load();
 
         expect(parseMock).toBeCalledTimes(1);
-        expect(parseMock).toBeCalledWith('---\nopenapi: ""', 'yaml')
+        expect(parseMock).toBeCalledWith('---\nopenapi: ""', 'yaml');
     });
 
     it('should parse yml document', async () => {
@@ -101,7 +101,7 @@ describe('DocumentLoader -> DocumentLoaderLocal', () => {
         await documentLoader.load();
 
         expect(parseMock).toBeCalledTimes(1);
-        expect(parseMock).toBeCalledWith('---\nopenapi: ""', 'yaml')
+        expect(parseMock).toBeCalledWith('---\nopenapi: ""', 'yaml');
     });
 
     it('should validate document', async () => {

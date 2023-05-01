@@ -34,7 +34,7 @@ describe('DocumentLoader -> DocumentLoaderRemote', () => {
     });
 
     it('should fetch document by url', async () => {
-        const documentLoader = new DocumentLoaderRemote({ url: 'https://some.host/path' })
+        const documentLoader = new DocumentLoaderRemote({ url: 'https://some.host/path' });
         await documentLoader.load();
 
         expect(gotMock).toBeCalledTimes(1);
@@ -44,7 +44,7 @@ describe('DocumentLoader -> DocumentLoaderRemote', () => {
     it('should validate document', async () => {
         gotJsonMock.mockReturnValue({ openapi: '3.0.1', info: {}, paths: {} });
 
-        const documentLoader = new DocumentLoaderRemote({ url: 'https://some.host/path' })
+        const documentLoader = new DocumentLoaderRemote({ url: 'https://some.host/path' });
         await documentLoader.load();
 
         expect(validateMock).toBeCalledTimes(1);
