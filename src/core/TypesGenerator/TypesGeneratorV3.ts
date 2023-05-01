@@ -1,7 +1,13 @@
-import { OpenAPIObject } from 'openapi3-ts';
+import {
+    OpenAPIObject,
+    PathItemObject,
+    SchemaObject,
+} from 'openapi3-ts';
 
 import { Registry } from '../Registry';
 import { PathCollector } from './PathCollector';
+
+type SchemaName = string;
 
 export class TypesGeneratorV3 {
     constructor(private registry: Registry, private document: OpenAPIObject) {}
@@ -19,14 +25,23 @@ export class TypesGeneratorV3 {
             this.document.paths,
             this.registry.config.pathWhitelist,
         );
-        const _collectedPaths = collector.collect();
+        const collectedPaths = collector.collect();
 
-        this.resolveSchemas();
+        this.resolveSchemas(collectedPaths);
     }
 
     // TODO Particular order = BFS, which we will reverted to first generate base types
-    private resolveSchemas() {
-        throw new Error("Not implemented resolveSchemas");
+    private resolveSchemas(paths: PathItemObject[]): Map<SchemaName, SchemaObject> {
+        const schemas = new Map<SchemaName, SchemaObject>();
+
+        for (const _path of paths) {
+            // ref – https://swagger.io/specification/#reference-object-example
+        }
+        // create queue based on paths
+        // TODO handle unnamed schemas in paths
+        // handle queue
+
+        return schemas;
     }
 
     // TODO rename

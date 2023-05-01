@@ -1,5 +1,5 @@
-import { Config } from '../../Core/Config';
-import { generate as generateTypes } from '../../Core';
+import { Config } from '../../core/Config';
+import { generate as generateTypes } from '../../core';
 
 import { resolve as resolveConfig, validate as validateConfig } from '../config';
 

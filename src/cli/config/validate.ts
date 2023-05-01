@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 
-import { ConfigOptions } from '../../Core/Config';
+import { ConfigOptions } from '../../core/Config';
 import schema from './schema.json';
 
 type Validate = (userConfig: unknown) => ConfigOptions;
