@@ -30,7 +30,7 @@ export class TypesGeneratorV3 {
         this.resolveSchemas(collectedPaths);
     }
 
-    // TODO Particular order = BFS, which we will reverted to first generate base types
+    // TODO Particular order = BFS, which we will reverted to firstly generate base types
     private resolveSchemas(paths: PathItemObject[]): Map<SchemaName, SchemaObject> {
         const schemas = new Map<SchemaName, SchemaObject>();
 

@@ -4,24 +4,26 @@
 
 Package for generating TypeScript code via OpenAPI specification.
 
-## Запуск
+Development in progress!
 
-1. Установить правильную версию node
+## How to start
+
+1. Switch to project NodeJS version
 
 ```bash
 nvm use
 ```
 
-2. Установить зависимости
+2. Install dependencies
 
 ```bash
 npm ci
 ```
 
-3. Описать конфиг в файле `otoysrc.json`
+3. Describe `otoysrc.json` configuration file
 
-4. Запустить пакет командой
+4. Run `otoys` via npm script
 
 ```bash
-npm run test
+npm run test:e2e
 ```
