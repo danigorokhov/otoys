@@ -1,0 +1,8 @@
+.Logo {
+    display: flex;
+    align-items: center;
+}
+
+.Logo-Text {
+    margin-left: 8px;
+}

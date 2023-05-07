@@ -1,0 +1,16 @@
+import React, {FC} from 'react';
+import { {{name}}Props } from './{{name}}.types';
+import {cn} from './{{name}}.cn';
+import './{{name}}.css';
+
+export const {{name}}: FC<{{name}}Props> = props => {
+    const {
+        className,
+    } = props;
+
+    return (
+        <div className={cn(null, [className])}>
+
+        </div>
+    );
+};

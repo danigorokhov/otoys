@@ -1,0 +1,22 @@
+.Header {
+    box-sizing: border-box;
+    background-color: rgba(22, 13, 27, .4);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid hsla(0, 0%, 100%, .2);
+    height: 64px;
+    padding: 0 48px;
+
+    display: grid;
+    grid-template-columns: 1fr repeat(1, auto);
+    grid-auto-flow: column;
+    align-items: center;
+    column-gap: 32px;
+}
+
+.Header-ExternalLink {
+    display: inline-flex;
+}
+
+.Header-ExternalLinkIcon {
+    margin-left: 4px;
+}

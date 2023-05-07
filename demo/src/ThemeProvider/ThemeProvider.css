@@ -1,0 +1,67 @@
+.ThemeProvider.yc-root_theme_light {
+    --yc-color-private-brand-1000: #ffb800;
+    --yc-color-private-brand-1000-solid: #ffb800;
+    --yc-color-private-brand-900: rgba(255, 184, 0, 0.9);
+    --yc-color-private-brand-900-solid: #ffbf1a;
+    --yc-color-private-brand-800: rgba(255, 184, 0, 0.8);
+    --yc-color-private-brand-800-solid: #ffc633;
+    --yc-color-private-brand-700: rgba(255, 184, 0, 0.7);
+    --yc-color-private-brand-700-solid: #ffcd4d;
+    --yc-color-private-brand-600: rgba(255, 184, 0, 0.6);
+    --yc-color-private-brand-600-solid: #ffd466;
+    --yc-color-private-brand-500: rgba(255, 184, 0, 0.5);
+    --yc-color-private-brand-500-solid: #ffdc80;
+    --yc-color-private-brand-400: rgba(255, 184, 0, 0.4);
+    --yc-color-private-brand-400-solid: #ffe399;
+    --yc-color-private-brand-300: rgba(255, 184, 0, 0.3);
+    --yc-color-private-brand-300-solid: #ffeab3;
+    --yc-color-private-brand-200: rgba(255, 184, 0, 0.2);
+    --yc-color-private-brand-200-solid: #fff1cc;
+    --yc-color-private-brand-100: rgba(255, 184, 0, 0.1);
+    --yc-color-private-brand-100-solid: #fff8e6;
+    --yc-color-private-brand-50: rgba(255, 184, 0, 0.05);
+    --yc-color-private-brand-50-solid: #fffbf2;
+
+    --yc-my-color-brand-normal: var(--yc-color-private-brand-800-solid);
+    --yc-my-color-brand-normal-hover: var(--yc-color-private-brand-900-solid);
+    --yc-my-color-brand-light: var(--yc-color-private-brand-300);
+    --yc-my-color-brand-selection: var(--yc-color-private-brand-100);
+    --yc-my-color-brand-selection-hover: var(--yc-color-private-brand-200);
+    --yc-my-color-brand-link: var(--yc-my-color-brand-normal);
+    --yc-my-color-brand-link-hover: var(--yc-color-private-brand-1000-solid);
+    --yc-my-color-brand-text-contrast: var(--yc-color-text-dark-primary);
+}
+
+.ThemeProvider.yc-root_theme_dark {
+    --yc-color-private-brand-1000: #ffbe5c;
+    --yc-color-private-brand-1000-solid: #ffbe5c;
+    --yc-color-private-brand-900: rgba(255, 190, 92, .9);
+    --yc-color-private-brand-900-solid: #e9ae57;
+    --yc-color-private-brand-800: rgba(255, 190, 92, .8);
+    --yc-color-private-brand-800-solid: #d39d51;
+    --yc-color-private-brand-700: rgba(255, 190, 92, .7);
+    --yc-color-private-brand-700-solid: #be8d4c;
+    --yc-color-private-brand-600: rgba(255, 190, 92, .6);
+    --yc-color-private-brand-600-solid: #a87d46;
+    --yc-color-private-brand-500: rgba(255, 190, 92, .5);
+    --yc-color-private-brand-500-solid: #926d41;
+    --yc-color-private-brand-400: rgba(255, 190, 92, .4);
+    --yc-color-private-brand-400-solid: #7c5c3b;
+    --yc-color-private-brand-300: rgba(255, 190, 92, .3);
+    --yc-color-private-brand-300-solid: #664c36;
+    --yc-color-private-brand-200: rgba(255, 190, 92, .2);
+    --yc-color-private-brand-200-solid: #513c30;
+    --yc-color-private-brand-100: rgba(255, 190, 92, .1);
+    --yc-color-private-brand-100-solid: #3b2b2b;
+    --yc-color-private-brand-50: rgba(255, 190, 92, .05);
+    --yc-color-private-brand-50-solid: #302328;
+
+    --yc-my-color-brand-normal: var(--yc-color-private-brand-1000-solid);
+    --yc-my-color-brand-normal-hover: var(--yc-color-private-brand-800-solid);
+    --yc-my-color-brand-light: var(--yc-color-private-brand-300);
+    --yc-my-color-brand-selection: var(--yc-color-private-brand-100);
+    --yc-my-color-brand-selection-hover: var(--yc-color-private-brand-200);
+    --yc-my-color-brand-link: var(--yc-my-color-brand-normal);
+    --yc-my-color-brand-link-hover: var(--yc-color-private-brand-1000-solid);
+    --yc-my-color-brand-text-contrast: var(--yc-color-text-light-primary);
+}

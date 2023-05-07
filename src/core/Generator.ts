@@ -157,7 +157,7 @@ export class Generator {
             case 'null':
                 return factory.createLiteralTypeNode(
                     factory.createNull(),
-                )
+                );
             case 'boolean':
                 return factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
             case 'integer':
@@ -292,10 +292,10 @@ export class Generator {
                         false,
                         undefined,
                         identifier,
-                    )])
+                    )]),
                 ),
                 factory.createStringLiteral(`./${identifier.text}`), // TODO check
-            )
+            );
         });
     }
 
