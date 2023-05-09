@@ -1,0 +1,15 @@
+.EditorSettings {
+    display: grid;
+    row-gap: 8px;
+    padding: 16px;
+    align-content: start;
+}
+
+.EditorSettings-Field {
+    display: grid;
+    row-gap: 8px;
+}
+
+.EditorSettings-RadioButton {
+    justify-self: start;
+}

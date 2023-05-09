@@ -1,0 +1,15 @@
+.GeneratorSettings {
+    display: grid;
+    row-gap: 8px;
+    padding: 16px;
+    align-content: start;
+}
+
+.GeneratorSettings-Field {
+    display: grid;
+    row-gap: 8px;
+}
+
+.GeneratorSettings-TextInput {
+    max-width: 400px;
+}
