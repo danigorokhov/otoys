@@ -4,6 +4,7 @@ import {cn} from './SwaggerDocument.cn';
 import './SwaggerDocument.css';
 import { Card, Tabs } from '@gravity-ui/uikit';
 import {TABS, TAB_EDITOR_ID, TAB_SETTINGS_ID} from './SwaggerDocument.const';
+import {SwaggerDocumentEditor} from '../SwaggerDocumentEditor';
 
 export const SwaggerDocument: FC<SwaggerDocumentProps> = props => {
     const {
@@ -26,8 +27,7 @@ export const SwaggerDocument: FC<SwaggerDocumentProps> = props => {
             />
 
             {activeTab === TAB_EDITOR_ID && (
-                null
-                // <SwaggerDocumentEditor />
+                <SwaggerDocumentEditor />
             )}
             {activeTab === TAB_SETTINGS_ID && (
                 null
