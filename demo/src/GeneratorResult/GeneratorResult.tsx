@@ -2,6 +2,9 @@ import React, {FC} from 'react';
 import { GeneratorResultProps } from './GeneratorResult.types';
 import {cn} from './GeneratorResult.cn';
 import './GeneratorResult.css';
+import { Card } from '@gravity-ui/uikit';
+import {GeneratorResultControls} from '../GeneratorResultControls';
+import {GeneratorResultViewer} from '../GeneratorResultViewer';
 
 export const GeneratorResult: FC<GeneratorResultProps> = props => {
     const {
@@ -9,11 +12,9 @@ export const GeneratorResult: FC<GeneratorResultProps> = props => {
     } = props;
 
     return (
-        <div>
-            {/* TODO
-                <GeneratorResultControls />
-                <CodeViewer />
-            */}
-        </div>
+        <Card className={cn(null, [className])}>
+            <GeneratorResultControls />
+            <GeneratorResultViewer />
+        </Card>
     );
 };

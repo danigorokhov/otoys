@@ -17,9 +17,10 @@ export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
     return (
         <CodeEditor
             className={cn(null, [className])}
-            language={'json'} // TODO support yaml
+            language="json" // TODO support yaml
             defaultValue={JSON.stringify(DEFAULT_VALUE, null, 4)} // TODO support document loading
             onChange={handleChange}
+            path="swaggerDocument.json"
         />
     );
 };

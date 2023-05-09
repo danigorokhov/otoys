@@ -12,6 +12,7 @@ export const CodeEditor: FC<CodeEditorProps> = props => {
         language,
         defaultValue,
         value,
+        path,
         onChange,
         className,
     } = props;
@@ -29,6 +30,7 @@ export const CodeEditor: FC<CodeEditorProps> = props => {
             defaultValue={defaultValue}
             value={value}
             onChange={onChange}
+            path={path}
         />
     );
 };

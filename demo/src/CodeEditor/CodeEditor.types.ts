@@ -3,7 +3,7 @@ import {ClassNameProps} from '../../@types/className';
 import MonacoEditor from '@monaco-editor/react';
 
 type MonacoEditorProps = ComponentProps<typeof MonacoEditor>;
-type MonacoEditorSupportedProps = Pick<MonacoEditorProps, 'defaultValue' | 'value' | 'onChange'>;
+type MonacoEditorSupportedProps = Pick<MonacoEditorProps, 'defaultValue' | 'value' | 'onChange' | 'path'>;
 
 export type CodeEditorProps = PropsWithChildren<{
     language: 'json' | 'yaml' | 'typescript',
