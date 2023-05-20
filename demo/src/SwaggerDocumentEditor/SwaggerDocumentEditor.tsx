@@ -39,7 +39,7 @@ export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
         <CodeEditor
             className={cn(null, [className])}
             language="json" // TODO support yaml
-            defaultValue={swaggerDocument}
+            value={swaggerDocument}
             onChange={handleChange}
             path="swaggerDocument.json"
         />
