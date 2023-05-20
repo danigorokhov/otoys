@@ -4,26 +4,13 @@ import {cn} from './GeneratorResultViewer.cn';
 import './GeneratorResultViewer.css';
 import { CodeEditor } from '../CodeEditor';
 
-// TODO generate from swagger document
-export const DEFAULT_VALUE = `export type Tag = {
-    id: number;
-    name: string;
+const CODE_EDITOR_OPTIONS = {
+    readOnly: true,
 };
-
-export type Category = {
-    id: number;
-    name: string;
-};
-
-export type Pet = {
-    category: Category;
-    photoUrls: string[];
-    tags: Tag[];
-};
-`;
 
 export const GeneratorResultViewer: FC<GeneratorResultViewerProps> = props => {
     const {
+        value,
         className,
     } = props;
 
@@ -31,7 +18,8 @@ export const GeneratorResultViewer: FC<GeneratorResultViewerProps> = props => {
         <CodeEditor
             className={cn(null, [className])}
             language="typescript"
-            defaultValue={DEFAULT_VALUE}
+            value={value}
+            options={CODE_EDITOR_OPTIONS}
             path="generatorResult.ts"
         />
     );
