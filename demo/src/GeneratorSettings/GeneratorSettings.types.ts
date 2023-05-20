@@ -5,7 +5,7 @@ import {WatchObserver} from 'react-hook-form';
 export type GeneratorSettingsProps = PropsWithChildren<{}> & ClassNameProps;
 
 export type GeneratorSettingsValues = {
-    pathWhitelist?: string;
+    pathWhitelist: string;
 };
 
 export type HandleChange = WatchObserver<GeneratorSettingsValues>;

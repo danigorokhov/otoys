@@ -4,18 +4,25 @@ import {cn} from './GeneratorSettings.cn';
 import './GeneratorSettings.css';
 import { Text, TextInput } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
+import {useUnit} from 'effector-react';
+import {$generatorSettings, setGeneratorSettings} from './GeneratorSettings.models';
+
+import './GeneratorSettings.models/init';
 
 export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
     const {
         className,
     } = props;
 
-    const {control, watch} = useForm<GeneratorSettingsValues>();
+    const [generatorSettingsValue, setGeneratorSettingsValue] = useUnit([$generatorSettings, setGeneratorSettings]);
 
-    const handleChange = useCallback<HandleChange>(_formValues => {
-        console.log(_formValues);
-        // TODO handle _formValues of editor settings
-    }, []);
+    const {control, watch} = useForm<GeneratorSettingsValues>({
+        defaultValues: generatorSettingsValue,
+    });
+
+    const handleChange = useCallback<HandleChange>(formValues => {
+        setGeneratorSettingsValue(formValues);
+    }, [setGeneratorSettingsValue]);
 
     useEffect(() => {
         const subscription = watch(handleChange);
@@ -42,7 +49,7 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
                     name={field.name}
                     value={field.value}
                     ref={field.ref}
-                    onChange={field.onChange}
+                    onUpdate={field.onChange}
                     onBlur={field.onBlur}
                 />
             </div>
