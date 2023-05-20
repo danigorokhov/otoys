@@ -5,6 +5,8 @@ import './Playground.css';
 import {SwaggerDocument} from '../SwaggerDocument';
 import {GeneratorResult} from '../GeneratorResult';
 
+import './Playground.models/init';
+
 export const Playground: FC<PlaygroundProps> = props => {
     const {
         className,

@@ -1,5 +1,5 @@
 import {sample} from 'effector';
-import {$generatorResult, generatorResultInitialized, generatorResultChanged, $isGeneratorResultInitialized} from '.';
+import {$generatorResult, generatorResultChanged, loadGeneratorResultFx} from '.';
 
 sample({
     clock: generatorResultChanged,
@@ -7,6 +7,6 @@ sample({
 });
 
 sample({
-    clock: generatorResultInitialized,
-    target: $isGeneratorResultInitialized,
+    clock: loadGeneratorResultFx.doneData,
+    target: $generatorResult,
 });

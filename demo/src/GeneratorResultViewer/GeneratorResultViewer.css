@@ -1,1 +1,4 @@
-.GeneratorResultViewer {}
+.GeneratorResultViewer {
+    display: grid;
+    place-content: center;
+}
