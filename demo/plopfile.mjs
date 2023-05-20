@@ -14,22 +14,22 @@ export default function generator(
             {
                 type: 'add',
                 path: 'src/{{name}}/index.ts',
-                templateFile: 'plop-templates/index.ts.hbs',
+                templateFile: 'plop-templates/component/index.ts.hbs',
             },
             {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.tsx',
-                templateFile: 'plop-templates/component.tsx.hbs',
+                templateFile: 'plop-templates/component/component.tsx.hbs',
             },
             {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.cn.ts',
-                templateFile: 'plop-templates/component.cn.ts.hbs',
+                templateFile: 'plop-templates/component/component.cn.ts.hbs',
             },
             {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.types.ts',
-                templateFile: 'plop-templates/component.types.ts.hbs',
+                templateFile: 'plop-templates/component/component.types.ts.hbs',
             },
             {
                 type: 'add',
@@ -47,14 +47,19 @@ export default function generator(
         }],
         actions: [
             {
+                type: 'append',
+                path: 'src/{{name}}/{{name}}.tsx',
+                templateFile: 'plop-templates/models/component.tsx.hbs',
+            },
+            {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.models/index.ts',
-                templateFile: 'plop-templates/component.models/index.ts.hbs',
+                templateFile: 'plop-templates/models/index.ts.hbs',
             },
             {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.models/init.ts',
-                templateFile: 'plop-templates/component.models/init.ts.hbs',
+                templateFile: 'plop-templates/models/init.ts.hbs',
             },
         ],
     });
