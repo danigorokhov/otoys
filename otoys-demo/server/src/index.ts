@@ -1,4 +1,7 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
+import {ping} from './modules/ping';
+import {api} from './modules/api';
 
 const PORT = 3030;
 
@@ -6,9 +9,11 @@ const fastify = Fastify({
     logger: true, // TODO change depends on NODE_ENVIRONMENT
 });
 
-fastify.get('/', (_request, reply) => {
-    reply.send({ hello: 'world' });
+fastify.register(cors, {
+    origin: [/^http:\/\/localhost/], // TODO add production domain
 });
+fastify.register(ping);
+fastify.register(api);
 
 const start = async () => {
     try {

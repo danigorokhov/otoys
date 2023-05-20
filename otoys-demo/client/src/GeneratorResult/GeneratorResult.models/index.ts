@@ -12,8 +12,19 @@ type LoadGeneratorResultParams = {
 
 type LoadGeneratorResultFx = (params: LoadGeneratorResultParams) => Promise<string>;
 
+type ApiGenerateResponse = { // TODO to generated types
+    code: string;
+};
+
 export const loadGeneratorResultFx = createEffect<LoadGeneratorResultFx>(async params => {
-    return 'type Hello = \'World!\';';
+    const response = await fetch('http://localhost:3030/api/generate', { // TODO to config.server.origin
+        method: 'POST',
+        body: JSON.stringify(params),
+    });
+
+    const result = await response.json() as ApiGenerateResponse;
+
+    return result.code;
 });
 
 export const $generatorResultStatus = status({

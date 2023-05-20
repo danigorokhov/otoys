@@ -8,12 +8,14 @@
     "start:watch": "nodemon ./src/index.ts"
   },
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
     "fastify": "^4.17.0",
     "pg": "^8.11.0"
   },
   "devDependencies": {
     "@tsconfig/node18": "^2.0.1",
     "@types/node": "^20.2.1",
+    "@types/pg": "^8.6.6",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
