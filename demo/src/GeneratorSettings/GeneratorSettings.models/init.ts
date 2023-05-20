@@ -1,9 +1,9 @@
 import { sample } from 'effector';
-import {setGeneratorSettings, $generatorSettings} from '.';
+import {generatorSettingsSet, $generatorSettings} from '.';
 
 sample({
     source: $generatorSettings,
-    clock: setGeneratorSettings,
+    clock: generatorSettingsSet,
     fn: (state, payload) => ({
         ...state,
         ...payload,

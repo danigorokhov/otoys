@@ -5,7 +5,7 @@ import './GeneratorSettings.css';
 import { Text, TextInput } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import {useUnit} from 'effector-react';
-import {$generatorSettings, setGeneratorSettings} from './GeneratorSettings.models';
+import {$generatorSettings, generatorSettingsSet} from './GeneratorSettings.models';
 
 import './GeneratorSettings.models/init';
 
@@ -14,7 +14,7 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
         className,
     } = props;
 
-    const [generatorSettingsValue, setGeneratorSettingsValue] = useUnit([$generatorSettings, setGeneratorSettings]);
+    const [generatorSettingsValue, setGeneratorSettingsValue] = useUnit([$generatorSettings, generatorSettingsSet]);
 
     const {control, watch} = useForm<GeneratorSettingsValues>({
         defaultValues: generatorSettingsValue,

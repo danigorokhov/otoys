@@ -8,4 +8,4 @@ const GENERATOR_SETTINGS_DEFAULT_VALUES: GeneratorSettingsValues = {
 
 export const $generatorSettings = createStore<GeneratorSettingsValues>(GENERATOR_SETTINGS_DEFAULT_VALUES);
 
-export const setGeneratorSettings = createEvent<Partial<GeneratorSettingsValues>>();
+export const generatorSettingsSet = createEvent<Partial<GeneratorSettingsValues>>();
