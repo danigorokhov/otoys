@@ -1,3 +1,3 @@
 module.exports = {
-    extends: ['./demo/.eslintrc.js'],
+    extends: ['./otoys-demo/client/.eslintrc.js'],
 };
