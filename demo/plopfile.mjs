@@ -38,4 +38,24 @@ export default function generator(
             },
         ],
     });
+
+    plop.setGenerator('models', {
+        prompts: [{
+            type: 'input',
+            name: 'name',
+            message: 'component name',
+        }],
+        actions: [
+            {
+                type: 'add',
+                path: 'src/{{name}}/{{name}}.models/index.ts',
+                templateFile: 'plop-templates/component.models/index.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: 'src/{{name}}/{{name}}.models/init.ts',
+                templateFile: 'plop-templates/component.models/init.ts.hbs',
+            },
+        ],
+    });
 };
