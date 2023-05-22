@@ -3,7 +3,7 @@ module.exports = {
     document: {
         type: 'local',
         url: 'https://petstore3.swagger.io/api/v3/openapi.json',
-        path: './examples/v3/petstore3.json'
+        path: './examples/v3/petstore3.json',
     },
     output: './output',
     pathWhitelist: '^/user',

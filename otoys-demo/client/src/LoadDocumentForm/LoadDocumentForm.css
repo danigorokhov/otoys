@@ -1,0 +1,23 @@
+.LoadDocumentForm {
+    display: grid;
+    row-gap: 8px;
+    padding: 16px;
+    align-content: start;
+}
+
+.LoadDocumentForm-Field {
+    display: grid;
+    row-gap: 8px;
+}
+
+.LoadDocumentForm-RadioButton {
+    justify-self: start;
+}
+
+.LoadDocumentForm-TextInput {
+    max-width: 400px;
+}
+
+.LoadDocumentForm-Submit {
+    margin-top: 8px;
+}

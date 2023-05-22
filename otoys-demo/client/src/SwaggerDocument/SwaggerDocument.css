@@ -1,0 +1,9 @@
+.SwaggerDocument {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+}
+
+.SwaggerDocument-Tabs {
+    padding: 0 16px;
+}

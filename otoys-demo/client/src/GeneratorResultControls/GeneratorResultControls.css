@@ -1,0 +1,9 @@
+.GeneratorResultControls {
+    padding: 0 16px;
+    height: 40px;
+    box-sizing: border-box;
+    box-shadow: inset 0 -1px 0 0 var(--yc-color-line-generic);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

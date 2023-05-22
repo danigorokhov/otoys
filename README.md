@@ -1,4 +1,4 @@
-# otoys
+# 🧸 otoys
 
 **O**penAPI **to** T**y**pe**S**cript
 

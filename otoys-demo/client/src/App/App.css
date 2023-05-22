@@ -1,0 +1,6 @@
+.App {
+    background-color: var(--yc-color-base-background);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
