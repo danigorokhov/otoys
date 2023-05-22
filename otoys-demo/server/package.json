@@ -10,7 +10,8 @@
   "dependencies": {
     "@fastify/cors": "^8.2.1",
     "fastify": "^4.17.0",
-    "pg": "^8.11.0"
+    "pg": "^8.11.0",
+    "swagger-typescript-api": "^12.0.4"
   },
   "devDependencies": {
     "@tsconfig/node18": "^2.0.1",
