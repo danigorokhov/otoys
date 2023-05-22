@@ -47,7 +47,8 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>((props, ref)
                 accept={accept}
             />
             <Button onClick={handleClick} size="m">
-                Upload
+                Загрузить
+                {/* Upload */}
             </Button>
             {file && <Text className={cn('Filename')} variant="body-1">
                 {file.name}

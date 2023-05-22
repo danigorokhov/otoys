@@ -36,6 +36,7 @@ export const api: FastifyPluginAsync = async (fastify) => {
             const generatedCode = await generateApi({
                 spec: JSON.parse(body.document),
                 generateClient: false,
+                typeSuffix: body.generatorSettings.pathWhitelist,
             });
 
             const { content: result } = generatedCode.files[0];

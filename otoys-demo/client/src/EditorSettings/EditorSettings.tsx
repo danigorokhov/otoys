@@ -31,12 +31,14 @@ export const EditorSettings: FC<EditorSettingsProps> = props => {
         <form className={cn(null, [className])}>
             {/* TODO i18n */}
             <Text variant="subheader-3">
-                Editor settings
+                {/* Editor settings */}
+                Настройки редактора
             </Text>
 
             <div className={cn('Field')}>
                 <Text variant="body-2">
-                    Language
+                    Язык
+                    {/* Language */}
                 </Text>
                 <RadioButton
                     className={cn('RadioButton')}

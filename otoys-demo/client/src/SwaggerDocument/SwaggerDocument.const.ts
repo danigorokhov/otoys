@@ -9,18 +9,22 @@ export const TAB_LOAD_DOCUMENT_ID = 'loadDocument';
 export const TABS: TabsItemProps[] = [
     {
         id: TAB_EDITOR_ID,
-        title: 'Editor',
+        // title: 'Editor',
+        title: 'Редактор',
     },
     {
         id: TAB_EDITOR_SETTINGS_ID,
-        title: 'Editor settings',
+        // title: 'Editor settings',
+        title: 'Настройки редактора',
     },
     {
         id: TAB_GENERATOR_SETTINGS_ID,
-        title: 'Generator settings',
+        // title: 'Generator settings',
+        title: 'Настройки генератора',
     },
     {
         id: TAB_LOAD_DOCUMENT_ID,
-        title: 'Load document',
+        // title: 'Load document',
+        title: 'Загрузка документа',
     },
 ];

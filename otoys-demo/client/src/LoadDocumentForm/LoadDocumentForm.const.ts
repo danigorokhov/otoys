@@ -5,11 +5,13 @@ export const DOCUMENT_TYPE_REMOTE = 'remote';
 export const DOCUMENT_TYPE_FILE = 'file';
 export const DOCUMENT_TYPE_OPTIONS: ControlGroupOption[] = [
     {
-        content: 'Remote',
+        content: 'Удалённый',
+        // content: 'Remote',
         value: DOCUMENT_TYPE_REMOTE,
     },
     {
-        content: 'File',
+        content: 'Файлом',
+        // content: 'File',
         value: DOCUMENT_TYPE_FILE,
     },
 ];

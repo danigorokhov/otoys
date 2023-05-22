@@ -29,13 +29,15 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
     return (
         <form onSubmit={handleSubmitFactory(handleSubmit)} className={cn(null, [className])}>
             <Text variant="subheader-3">
-                Load document
+                {/* Load document */}
+                Загрузка документа
             </Text>
 
             {/* TODO i18n */}
             <div className={cn('Field')}>
                 <Text variant="body-2">
-                    Type of document loading
+                    Тип документа
+                    {/* Type of document loading */}
                 </Text>
                 <RadioButton
                     className={cn('RadioButton')}
@@ -52,7 +54,8 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             {documentTypeField.value === DOCUMENT_TYPE_REMOTE && (
                 <div className={cn('Field')}>
                     <Text variant="body-2">
-                        URL to the OpenAPI document
+                        URL для скачивания документа
+                        {/* URL to the OpenAPI document */}
                     </Text>
                     <TextInput
                         className={cn('TextInput')}
@@ -69,7 +72,8 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             {documentTypeField.value === DOCUMENT_TYPE_FILE && (
                 <div className={cn('Field')}>
                     <Text variant="body-2">
-                        OpenAPI document as a file
+                        Документ в виде файла
+                        {/* OpenAPI document as a file */}
                     </Text>
                     <FileInput
                         name={fileField.name}
@@ -83,7 +87,8 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             )}
 
             {/* TODO validate form values */}
-            <SubmitControl className={cn('Submit')} text="Load" />
+            <SubmitControl className={cn('Submit')} text="Загрузить" />
+            {/* <SubmitControl className={cn('Submit')} text="Load" /> */}
         </form>
     );
 };

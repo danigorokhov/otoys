@@ -35,17 +35,33 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
         <form className={cn(null, [className])}>
             {/* TODO i18n */}
             <Text variant="subheader-3">
-                Generator settings
+                {/* Generator settings */}
+                Настройки генератора
             </Text>
 
             <div className={cn('Field')}>
-                <Text variant="body-2">
+                {/* TODO rename to type prefix for demo!!!!!!! */}
+                {/* <Text variant="body-2">
                     Regular expression to filter paths
                 </Text>
                 <TextInput
                     className={cn('TextInput')}
                     size="m"
                     placeholder="^/user"
+                    name={field.name}
+                    value={field.value}
+                    ref={field.ref}
+                    onUpdate={field.onChange}
+                    onBlur={field.onBlur}
+                /> */}
+                <Text variant="body-2">
+                    {/* Type suffix */}
+                    Добавление суффикса для типов
+                </Text>
+                <TextInput
+                    className={cn('TextInput')}
+                    size="m"
+                    placeholder="DTO"
                     name={field.name}
                     value={field.value}
                     ref={field.ref}
