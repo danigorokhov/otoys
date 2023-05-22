@@ -10,7 +10,7 @@ const fastify = Fastify({
 });
 
 fastify.register(cors, {
-    origin: [/^http:\/\/localhost/], // TODO add production domain
+    origin: [/^http:\/\/localhost/, /local\.otoys\.tech:3000$/], // TODO add production domain
 });
 fastify.register(ping);
 fastify.register(api);
