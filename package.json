@@ -1,7 +1,7 @@
 {
   "name": "@otoys/cli",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.13",
+  "description": "CLI to generate TypeScript types from OpenAPI document",
   "main": "build/index.js",
   "scripts": {
     "prepare": "rimraf build && npm run build",
