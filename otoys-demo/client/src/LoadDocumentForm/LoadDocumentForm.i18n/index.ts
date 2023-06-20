@@ -1,5 +1,5 @@
 import { I18NFn } from '@gravity-ui/i18n';
-import { i18n as i18nBase } from '../../I18nProvider';
+import { i18n as i18nBase } from '../../utils/i18n';
 import en from './en.json';
 import ru from './ru.json';
 
