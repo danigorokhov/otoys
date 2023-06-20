@@ -5,6 +5,7 @@ import {cn} from './EditorSettings.cn';
 import './EditorSettings.css';
 import { RadioButton, Text } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
+import {i18n} from './EditorSettings.i18n';
 
 export const EditorSettings: FC<EditorSettingsProps> = props => {
     const {
@@ -29,16 +30,13 @@ export const EditorSettings: FC<EditorSettingsProps> = props => {
 
     return (
         <form className={cn(null, [className])}>
-            {/* TODO i18n */}
             <Text variant="subheader-3">
-                {/* Editor settings */}
-                Настройки редактора
+                {i18n('title')}
             </Text>
 
             <div className={cn('Field')}>
                 <Text variant="body-2">
-                    Язык
-                    {/* Language */}
+                    {i18n('field.lang.label')}
                 </Text>
                 <RadioButton
                     className={cn('RadioButton')}
