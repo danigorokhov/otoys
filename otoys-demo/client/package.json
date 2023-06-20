@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@bem-react/classname": "^1.6.0",
+    "@gravity-ui/i18n": "^1.1.0",
     "@gravity-ui/uikit": "^4.10.0",
     "@monaco-editor/react": "^4.5.0",
     "@testing-library/jest-dom": "^5.16.5",
