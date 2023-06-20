@@ -63,4 +63,34 @@ export default function generator(
             },
         ],
     });
+
+    plop.setGenerator('i18n', {
+        prompts: [{
+            type: 'input',
+            name: 'name',
+            message: 'component name',
+        }],
+        actions: [
+            {
+                type: 'append',
+                path: 'src/{{name}}/{{name}}.tsx',
+                templateFile: 'plop-templates/i18n/component.tsx.hbs',
+            },
+            {
+                type: 'add',
+                path: 'src/{{name}}/{{name}}.i18n/en.json',
+                templateFile: 'plop-templates/i18n/en.json.hbs',
+            },
+            {
+                type: 'add',
+                path: 'src/{{name}}/{{name}}.i18n/ru.json',
+                templateFile: 'plop-templates/i18n/ru.json.hbs',
+            },
+            {
+                type: 'add',
+                path: 'src/{{name}}/{{name}}.i18n/index.ts',
+                templateFile: 'plop-templates/i18n/index.ts.hbs',
+            },
+        ],
+    });
 };
