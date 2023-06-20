@@ -1,0 +1,12 @@
+{
+  "LoadDocumentForm": {
+    "title": "Загрузка документа",
+    "field.documentType.label": "Тип документа",
+    "field.documentType.option.remote": "Удалённый",
+    "field.documentType.option.file": "Файл",
+    "field.url.label": "URL для скачивания документа",
+    "field.url.placeholder": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "field.file.label": "Документ в виде файла",
+    "submit": "Загрузить"
+  }
+}

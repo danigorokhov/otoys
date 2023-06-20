@@ -1,0 +1,12 @@
+{
+  "LoadDocumentForm": {
+    "title": "Load document",
+    "field.documentType.label": "Document type",
+    "field.documentType.option.remote": "Remote",
+    "field.documentType.option.file": "File",
+    "field.url.label": "URL to download OpenAPI document",
+    "field.url.placeholder": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "field.file.label": "Document as a file",
+    "submit": "Load"
+  }
+}
