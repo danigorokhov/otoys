@@ -1,0 +1,8 @@
+{
+  "SwaggerDocument": {
+    "tab.editor": "Editor",
+    "tab.editorSettings": "Editor settings",
+    "tab.generatorSettings": "Generator settings",
+    "tab.loadDocument": "Load document"
+  }
+}
