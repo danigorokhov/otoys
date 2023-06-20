@@ -3,12 +3,12 @@ import { SubmitControlProps } from './SubmitControl.types';
 import {cn} from './SubmitControl.cn';
 import { Button } from '@gravity-ui/uikit';
 import './SubmitControl.css';
+import {i18n} from './SubmitControl.i18n';
 
 export const SubmitControl: FC<SubmitControlProps> = props => {
     const {
         className,
-        // TODO i18n
-        text = 'Submit',
+        text = i18n('submit'),
     } = props;
 
     const inputRef = useRef<HTMLInputElement | null>(null);
