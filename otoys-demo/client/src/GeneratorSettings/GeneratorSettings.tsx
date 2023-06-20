@@ -6,6 +6,7 @@ import { Text, TextInput } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import {useUnit} from 'effector-react';
 import {$generatorSettings, generatorSettingsSet} from './GeneratorSettings.models';
+import {i18n} from './GeneratorSettings.i18n';
 
 import './GeneratorSettings.models/init';
 
@@ -33,14 +34,12 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
 
     return (
         <form className={cn(null, [className])}>
-            {/* TODO i18n */}
             <Text variant="subheader-3">
-                {/* Generator settings */}
-                Настройки генератора
+                {i18n('title')}
             </Text>
 
             <div className={cn('Field')}>
-                {/* TODO rename to type prefix for demo!!!!!!! */}
+                {/* TODO add support of swagger-typescript-api and otoys by radiobutton */}
                 {/* <Text variant="body-2">
                     Regular expression to filter paths
                 </Text>
@@ -55,13 +54,12 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
                     onBlur={field.onBlur}
                 /> */}
                 <Text variant="body-2">
-                    {/* Type suffix */}
-                    Добавление суффикса для типов
+                    {i18n('swagger-typescript-api.typeSuffix.label')}
                 </Text>
                 <TextInput
                     className={cn('TextInput')}
                     size="m"
-                    placeholder="DTO"
+                    placeholder={i18n('swagger-typescript-api.typeSuffix.placeholder')}
                     name={field.name}
                     value={field.value}
                     ref={field.ref}
