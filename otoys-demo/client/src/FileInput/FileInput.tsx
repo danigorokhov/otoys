@@ -3,6 +3,7 @@ import { FileInputProps } from './FileInput.types';
 import {cn} from './FileInput.cn';
 import { Button, Text } from '@gravity-ui/uikit';
 import './FileInput.css';
+import {i18n} from './FileInput.i18n';
 
 export const FileInput = forwardRef<HTMLDivElement, FileInputProps>((props, ref) => {
     const {
@@ -47,8 +48,7 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>((props, ref)
                 accept={accept}
             />
             <Button onClick={handleClick} size="m">
-                Загрузить
-                {/* Upload */}
+                {i18n('upload')}
             </Button>
             {file && <Text className={cn('Filename')} variant="body-1">
                 {file.name}
