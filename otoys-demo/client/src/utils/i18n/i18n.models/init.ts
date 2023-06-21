@@ -3,10 +3,10 @@ import { $lang, langChanged, reflectLangFx } from '.';
 
 sample({
     clock: langChanged,
-    trigger: $lang,
+    target: $lang,
 });
 
 sample({
     clock: $lang,
-    trigger: reflectLangFx,
+    target: reflectLangFx,
 });
