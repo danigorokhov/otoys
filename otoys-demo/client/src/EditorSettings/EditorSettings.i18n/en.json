@@ -1,0 +1,8 @@
+{
+  "EditorSettings": {
+    "title": "Editor settings",
+    "field.lang.label": "Language",
+    "field.lang.option.json": "JSON",
+    "field.lang.option.yaml": "YAML"
+  }
+}

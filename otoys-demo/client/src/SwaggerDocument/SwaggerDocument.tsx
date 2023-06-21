@@ -1,18 +1,41 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, {FC, useCallback, useMemo, useState} from 'react';
 import { SwaggerDocumentProps, HandleSelectTab } from './SwaggerDocument.types';
 import {cn} from './SwaggerDocument.cn';
 import './SwaggerDocument.css';
-import { Card, Tabs } from '@gravity-ui/uikit';
-import {TABS, TAB_EDITOR_ID, TAB_GENERATOR_SETTINGS_ID, TAB_EDITOR_SETTINGS_ID, TAB_LOAD_DOCUMENT_ID} from './SwaggerDocument.const';
+import { Card, Tabs, TabsItemProps } from '@gravity-ui/uikit';
+import {TAB_EDITOR_ID, TAB_GENERATOR_SETTINGS_ID, TAB_EDITOR_SETTINGS_ID, TAB_LOAD_DOCUMENT_ID} from './SwaggerDocument.const';
 import {SwaggerDocumentEditor} from '../SwaggerDocumentEditor';
 import {GeneratorSettings} from '../GeneratorSettings';
 import {EditorSettings} from '../EditorSettings';
 import {LoadDocumentForm} from '../LoadDocumentForm';
+import { getI18nKeysetFn } from './SwaggerDocument.i18n';
+import { useI18n } from '../utils/i18n';
 
 export const SwaggerDocument: FC<SwaggerDocumentProps> = props => {
     const {
         className,
     } = props;
+
+    const { i18n } = useI18n(getI18nKeysetFn);
+
+    const tabs: TabsItemProps[] = useMemo(() => [
+        {
+            id: TAB_EDITOR_ID,
+            title: i18n('tab.editor'),
+        },
+        {
+            id: TAB_EDITOR_SETTINGS_ID,
+            title: i18n('tab.editorSettings'),
+        },
+        {
+            id: TAB_GENERATOR_SETTINGS_ID,
+            title: i18n('tab.generatorSettings'),
+        },
+        {
+            id: TAB_LOAD_DOCUMENT_ID,
+            title: i18n('tab.loadDocument'),
+        },
+    ], [i18n]);
 
     const [activeTab, setActiveTab] = useState(TAB_EDITOR_ID);
     const handleSelectTab = useCallback<HandleSelectTab>(newActiveTab => {
@@ -25,7 +48,7 @@ export const SwaggerDocument: FC<SwaggerDocumentProps> = props => {
                 className={cn('Tabs')}
                 activeTab={activeTab}
                 onSelectTab={handleSelectTab}
-                items={TABS}
+                items={tabs}
                 size="l"
             />
 

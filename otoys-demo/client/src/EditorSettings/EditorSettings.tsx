@@ -1,15 +1,30 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect, useMemo} from 'react';
 import { EditorSettingsProps, EditorSettingsValues, HandleChange } from './EditorSettings.types';
-import {LANGUAGE_OPTIONS, EDITOR_SETTINGS_DEFAULT_VALUES} from './EditorSettings.const';
+import {LANGUAGE_JSON, LANGUAGE_YAML, EDITOR_SETTINGS_DEFAULT_VALUES} from './EditorSettings.const';
 import {cn} from './EditorSettings.cn';
 import './EditorSettings.css';
-import { RadioButton, Text } from '@gravity-ui/uikit';
+import { RadioButton, Text, ControlGroupOption } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
+import { getI18nKeysetFn } from './EditorSettings.i18n';
+import { useI18n } from '../utils/i18n';
 
 export const EditorSettings: FC<EditorSettingsProps> = props => {
     const {
         className,
     } = props;
+
+    const { i18n } = useI18n(getI18nKeysetFn);
+
+    const languageOptions: ControlGroupOption[] = useMemo(() => [
+        {
+            content: i18n('field.lang.option.json'),
+            value: LANGUAGE_JSON,
+        },
+        {
+            content: i18n('field.lang.option.yaml'),
+            value: LANGUAGE_YAML,
+        },
+    ], [i18n]);
 
     const {control, watch} = useForm<EditorSettingsValues>({
         defaultValues: EDITOR_SETTINGS_DEFAULT_VALUES,
@@ -29,21 +44,18 @@ export const EditorSettings: FC<EditorSettingsProps> = props => {
 
     return (
         <form className={cn(null, [className])}>
-            {/* TODO i18n */}
             <Text variant="subheader-3">
-                {/* Editor settings */}
-                Настройки редактора
+                {i18n('title')}
             </Text>
 
             <div className={cn('Field')}>
                 <Text variant="body-2">
-                    Язык
-                    {/* Language */}
+                    {i18n('field.lang.label')}
                 </Text>
                 <RadioButton
                     className={cn('RadioButton')}
                     size="m"
-                    options={LANGUAGE_OPTIONS}
+                    options={languageOptions}
                     name={field.name}
                     ref={field.ref}
                     onUpdate={field.onChange}

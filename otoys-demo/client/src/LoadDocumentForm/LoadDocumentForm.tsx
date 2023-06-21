@@ -1,17 +1,32 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import { LoadDocumentFormProps, LoadDocumentFormValues, HandleSubmit } from './LoadDocumentForm.types';
-import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE, DOCUMENT_TYPE_OPTIONS, LOAD_DOCUMENT_FORM_DEFAULT_VALUES} from './LoadDocumentForm.const';
+import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE, LOAD_DOCUMENT_FORM_DEFAULT_VALUES} from './LoadDocumentForm.const';
 import {cn} from './LoadDocumentForm.cn';
 import './LoadDocumentForm.css';
-import { Text, TextInput, RadioButton } from '@gravity-ui/uikit';
+import { Text, TextInput, RadioButton, ControlGroupOption } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import { FileInput } from '../FileInput';
 import { SubmitControl } from '../SubmitControl';
+import { getI18nKeysetFn } from './LoadDocumentForm.i18n';
+import { useI18n } from '../utils/i18n';
 
 export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
     const {
         className,
     } = props;
+
+    const {i18n} = useI18n(getI18nKeysetFn);
+
+    const documentTypeOptions: ControlGroupOption[] = useMemo(() => [
+        {
+            content: i18n('field.documentType.option.remote'),
+            value: DOCUMENT_TYPE_REMOTE,
+        },
+        {
+            content: i18n('field.documentType.option.file'),
+            value: DOCUMENT_TYPE_FILE,
+        },
+    ], [i18n]);
 
     const {control, handleSubmit: handleSubmitFactory} = useForm<LoadDocumentFormValues>({
         defaultValues: LOAD_DOCUMENT_FORM_DEFAULT_VALUES,
@@ -29,20 +44,17 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
     return (
         <form onSubmit={handleSubmitFactory(handleSubmit)} className={cn(null, [className])}>
             <Text variant="subheader-3">
-                {/* Load document */}
-                Загрузка документа
+                {i18n('title')}
             </Text>
 
-            {/* TODO i18n */}
             <div className={cn('Field')}>
                 <Text variant="body-2">
-                    Тип документа
-                    {/* Type of document loading */}
+                    {i18n('field.documentType.label')}
                 </Text>
                 <RadioButton
                     className={cn('RadioButton')}
                     size="m"
-                    options={DOCUMENT_TYPE_OPTIONS}
+                    options={documentTypeOptions}
                     name={documentTypeField.name}
                     value={documentTypeField.value}
                     ref={documentTypeField.ref}
@@ -54,12 +66,11 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             {documentTypeField.value === DOCUMENT_TYPE_REMOTE && (
                 <div className={cn('Field')}>
                     <Text variant="body-2">
-                        URL для скачивания документа
-                        {/* URL to the OpenAPI document */}
+                        {i18n('field.url.label')}
                     </Text>
                     <TextInput
                         className={cn('TextInput')}
-                        placeholder="https://petstore3.swagger.io/api/v3/openapi.json"
+                        placeholder={i18n('field.url.placeholder')}
                         size="m"
                         name={urlField.name}
                         value={urlField.value}
@@ -72,8 +83,7 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             {documentTypeField.value === DOCUMENT_TYPE_FILE && (
                 <div className={cn('Field')}>
                     <Text variant="body-2">
-                        Документ в виде файла
-                        {/* OpenAPI document as a file */}
+                        {i18n('field.file.label')}
                     </Text>
                     <FileInput
                         name={fileField.name}
@@ -87,8 +97,7 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
             )}
 
             {/* TODO validate form values */}
-            <SubmitControl className={cn('Submit')} text="Загрузить" />
-            {/* <SubmitControl className={cn('Submit')} text="Load" /> */}
+            <SubmitControl className={cn('Submit')} text={i18n('submit')} />
         </form>
     );
 };

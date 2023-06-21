@@ -1,0 +1,7 @@
+{
+  "GeneratorSettings": {
+    "title": "Generator settings",
+    "swagger-typescript-api.typeSuffix.label": "Type suffix",
+    "swagger-typescript-api.typeSuffix.placeholder": "DTO"
+  }
+}
