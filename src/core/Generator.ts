@@ -8,7 +8,7 @@ import {
     ReferenceObject,
     ResponseObject,
     SchemaObject,
-} from 'openapi3-ts';
+} from 'openapi3-ts/oas30';
 import { resolve } from 'path';
 import ts, { factory } from 'typescript';
 

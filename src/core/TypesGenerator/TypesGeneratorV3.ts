@@ -2,7 +2,7 @@ import {
     OpenAPIObject,
     PathItemObject,
     SchemaObject,
-} from 'openapi3-ts';
+} from 'openapi3-ts/oas30';
 
 import { Registry } from '../Registry';
 import { PathCollector } from './PathCollector';
