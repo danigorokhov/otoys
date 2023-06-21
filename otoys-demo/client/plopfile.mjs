@@ -34,7 +34,7 @@ export default function generator(
             {
                 type: 'add',
                 path: 'src/{{name}}/{{name}}.css',
-                templateFile: 'plop-templates/component.css.hbs',
+                templateFile: 'plop-templates/component/component.css.hbs',
             },
         ],
     });

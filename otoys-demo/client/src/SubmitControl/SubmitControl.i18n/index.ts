@@ -1,12 +1,17 @@
 import { I18NFn } from '@gravity-ui/i18n';
-import { i18n as i18nBase } from '../../utils/i18n';
+import { GetI18nKeysetFn, registerKeysets } from '../../utils/i18n';
 import en from './en.json';
 import ru from './ru.json';
 
-i18nBase.registerKeysets('en', en);
-i18nBase.registerKeysets('ru', ru);
+registerKeysets('en', en);
+registerKeysets('ru', ru);
 
-const i18nTyped = i18nBase.i18n as I18NFn<typeof en | typeof ru>;
-const i18nKeyset = i18nTyped.bind(i18nBase, 'SubmitControl');
+type KeysetData = typeof en | typeof ru;
 
-export { i18nKeyset as i18n };
+// TODO fix lier type I18NFn
+export const getI18nKeysetFn: GetI18nKeysetFn<KeysetData> = i18nBase => {
+    const i18nFnTyped = i18nBase.i18n as I18NFn<KeysetData>;
+    const i18nKeysetFn = i18nFnTyped.bind(i18nBase, 'SubmitControl');
+
+    return i18nKeysetFn;
+};

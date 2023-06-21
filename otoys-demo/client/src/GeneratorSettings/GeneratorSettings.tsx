@@ -6,7 +6,8 @@ import { Text, TextInput } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import {useUnit} from 'effector-react';
 import {$generatorSettings, generatorSettingsSet} from './GeneratorSettings.models';
-import {i18n} from './GeneratorSettings.i18n';
+import { getI18nKeysetFn } from './GeneratorSettings.i18n';
+import { useI18n } from '../utils/i18n';
 
 import './GeneratorSettings.models/init';
 
@@ -14,6 +15,8 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
     const {
         className,
     } = props;
+
+    const { i18n } = useI18n(getI18nKeysetFn);
 
     const [generatorSettingsValue, setGeneratorSettingsValue] = useUnit([$generatorSettings, generatorSettingsSet]);
 

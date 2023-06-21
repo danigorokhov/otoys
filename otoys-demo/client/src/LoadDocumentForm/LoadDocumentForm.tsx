@@ -1,18 +1,32 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import { LoadDocumentFormProps, LoadDocumentFormValues, HandleSubmit } from './LoadDocumentForm.types';
-import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE, DOCUMENT_TYPE_OPTIONS, LOAD_DOCUMENT_FORM_DEFAULT_VALUES} from './LoadDocumentForm.const';
+import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE, LOAD_DOCUMENT_FORM_DEFAULT_VALUES} from './LoadDocumentForm.const';
 import {cn} from './LoadDocumentForm.cn';
 import './LoadDocumentForm.css';
-import { Text, TextInput, RadioButton } from '@gravity-ui/uikit';
+import { Text, TextInput, RadioButton, ControlGroupOption } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import { FileInput } from '../FileInput';
 import { SubmitControl } from '../SubmitControl';
-import {i18n} from './LoadDocumentForm.i18n';
+import { getI18nKeysetFn } from './LoadDocumentForm.i18n';
+import { useI18n } from '../utils/i18n';
 
 export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
     const {
         className,
     } = props;
+
+    const {i18n} = useI18n(getI18nKeysetFn);
+
+    const documentTypeOptions: ControlGroupOption[] = useMemo(() => [
+        {
+            content: i18n('field.documentType.option.remote'),
+            value: DOCUMENT_TYPE_REMOTE,
+        },
+        {
+            content: i18n('field.documentType.option.file'),
+            value: DOCUMENT_TYPE_FILE,
+        },
+    ], [i18n]);
 
     const {control, handleSubmit: handleSubmitFactory} = useForm<LoadDocumentFormValues>({
         defaultValues: LOAD_DOCUMENT_FORM_DEFAULT_VALUES,
@@ -40,7 +54,7 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
                 <RadioButton
                     className={cn('RadioButton')}
                     size="m"
-                    options={DOCUMENT_TYPE_OPTIONS}
+                    options={documentTypeOptions}
                     name={documentTypeField.name}
                     value={documentTypeField.value}
                     ref={documentTypeField.ref}

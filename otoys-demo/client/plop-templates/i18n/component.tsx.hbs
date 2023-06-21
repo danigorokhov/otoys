@@ -1,1 +1,4 @@
-import {i18n} from './{{name}}.i18n';
+import { getI18nKeysetFn } from './{{name}}.i18n';
+import { useI18n } from '../utils/i18n';
+
+const { i18n } = useI18n(getI18nKeysetFn);

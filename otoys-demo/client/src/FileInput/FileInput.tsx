@@ -3,7 +3,8 @@ import { FileInputProps } from './FileInput.types';
 import {cn} from './FileInput.cn';
 import { Button, Text } from '@gravity-ui/uikit';
 import './FileInput.css';
-import {i18n} from './FileInput.i18n';
+import { getI18nKeysetFn } from './FileInput.i18n';
+import { useI18n } from '../utils/i18n';
 
 export const FileInput = forwardRef<HTMLDivElement, FileInputProps>((props, ref) => {
     const {
@@ -15,6 +16,8 @@ export const FileInput = forwardRef<HTMLDivElement, FileInputProps>((props, ref)
         inputRef: inputRefPassed,
         accept,
     } = props;
+
+    const { i18n } = useI18n(getI18nKeysetFn);
 
     const [file, setFile] = useState<File | null>(value);
     const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(event => {
