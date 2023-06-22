@@ -245,5 +245,6 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
         });
 
         it.todo('should throw if resolved object isn\'t SchemaObject');
+        it.todo('tests for schemaName');
     });
 });
