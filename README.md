@@ -25,5 +25,5 @@ npm ci
 4. Run `otoys` via npm script
 
 ```bash
-npm run test:e2e
+npm run e2e
 ```

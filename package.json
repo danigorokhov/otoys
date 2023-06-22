@@ -7,9 +7,9 @@
     "prepare": "rimraf build && npm run build",
     "build": "tsc && npm run generate:schema:config",
     "dev": "tsc --watch",
-    "test": "jest",
-    "test:dev": "jest --watch",
-    "test:e2e": "node cli/index generate",
+    "unit": "jest",
+    "unit:watch": "jest --watch",
+    "e2e": "node cli/index generate",
     "generate:schema:config": "typescript-json-schema src/core/Config.ts ConfigOptions -o src/cli/config/schema.json"
   },
   "bin": {
