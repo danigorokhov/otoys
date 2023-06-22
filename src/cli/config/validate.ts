@@ -14,5 +14,5 @@ export const validate: Validate = userConfig => {
     }
 
     // TODO handle ajv validation errors
-    throw new Error('Validation error: userConfig doesn\'t satisfy config json schema');
+    throw new Error('ValidationError: userConfig doesn\'t satisfy config json schema');
 };
