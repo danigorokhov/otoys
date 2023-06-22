@@ -7,41 +7,38 @@ import {
 import { Registry } from '../Registry';
 import { SchemaName } from '../types/schema';
 import { PathCollector } from './PathCollector';
+import { SchemaCollector } from './SchemaCollector';
 import { RefResolver } from './RefResolver';
 
 export class TypesGeneratorV3 {
-    constructor(private registry: Registry, private document: OpenAPIObject) {}
+    paths: PathItemObject[] = [];
+    schemas: Map<SchemaName, SchemaObject> = new Map();
+    refResolver: RefResolver;
+
+    constructor(private registry: Registry, private document: OpenAPIObject) {
+        this.refResolver = new RefResolver(document);
+    }
 
     public async generate() {
         this.prepare();
 
         this.createASTNodes();
 
-        this.print();
+        this.print(); // TODO option to get result as a string
     }
 
     private prepare() {
-        const collector = new PathCollector(
+        const pathCollector = new PathCollector(
             this.document.paths,
             this.registry.config.pathWhitelist,
         );
-        const collectedPaths = collector.collect();
+        this.paths = pathCollector.collect();
 
-        this.resolveSchemas(collectedPaths);
-    }
-
-    // TODO Particular order = BFS, which we will reverted to firstly generate base types
-    private resolveSchemas(paths: PathItemObject[]): Map<SchemaName, SchemaObject> {
-        const schemas = new Map<SchemaName, SchemaObject>();
-
-        for (const _path of paths) {
-            // ref – https://swagger.io/specification/#reference-object-example
-        }
-        // create queue based on paths
-        // TODO handle unnamed schemas in paths
-        // handle queue
-
-        return schemas;
+        const schemaCollector = new SchemaCollector(
+            this.paths,
+            this.refResolver,
+        );
+        this.schemas = schemaCollector.collect();
     }
 
     // TODO rename
@@ -52,7 +49,7 @@ export class TypesGeneratorV3 {
         throw new Error("Not implemented createASTNodeFromSchema");
     }
 
-    private print() {
+    private print() { // TODO use Printer
         this.createASTPrinter();
         this.createOutputFile();
     }
