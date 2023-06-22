@@ -5,9 +5,9 @@ import {
 } from 'openapi3-ts/oas30';
 
 import { Registry } from '../Registry';
+import { SchemaName } from '../types/schema';
 import { PathCollector } from './PathCollector';
-
-type SchemaName = string;
+import { RefResolver } from './RefResolver';
 
 export class TypesGeneratorV3 {
     constructor(private registry: Registry, private document: OpenAPIObject) {}

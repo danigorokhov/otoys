@@ -13,7 +13,7 @@ import {
     isRequestBodyObject,
     isSchemaObject,
 } from '../utils/typePredicates';
-import { SchemaEntry } from './SchemaCollector'; // TODO extract
+import { SchemaEntry } from '../types/schema';
 
 type RefParsed = {
     root: OpenAPIObject;
