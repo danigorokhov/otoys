@@ -1,6 +1,7 @@
-import { OpenAPIObject } from 'openapi3-ts';
+import { OpenAPIObject } from 'openapi3-ts/oas30';
 import YAML from 'yaml';
 
+// Local type for loading
 export type DocumentType = 'yaml' | 'json';
 
 export abstract class DocumentLoaderBase {
@@ -12,6 +13,7 @@ export abstract class DocumentLoaderBase {
     static parse(document: string, type: DocumentType) {
         let documentParsed: unknown;
 
+        // Uses parser by document type
         switch (type) {
             case 'yaml': {
                 documentParsed = YAML.parse(document);
@@ -20,7 +22,9 @@ export abstract class DocumentLoaderBase {
                 documentParsed = JSON.parse(document);
                 break;
             } default: {
-                throw new Error(`DocumentLoaderError: unknown document type "${type}"`);
+                throw new Error(
+                    `DocumentLoaderError: unknown document type "${type}"`
+                );
             }
         }
 

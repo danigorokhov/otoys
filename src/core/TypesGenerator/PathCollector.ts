@@ -1,4 +1,4 @@
-import { PathsObject, PathItemObject } from 'openapi3-ts';
+import { PathsObject, PathItemObject } from 'openapi3-ts/oas30';
 
 import { Config } from '../Config';
 
@@ -13,9 +13,11 @@ export class PathCollector {
             whitelistRegExp = new RegExp(this.whitelist);
         }
 
+        // Optional whitelist to optional RegExp
         const pathEntries = Object.entries<PathItemObject>(this.paths);
 
         for (const [path, pathItem] of pathEntries) {
+            // Filters paths by regular expression from user config
             if (this.matchPath(path, whitelistRegExp)) {
                 collectedPaths.push(pathItem);
             }

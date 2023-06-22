@@ -1,0 +1,382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypesGenerator/TypesGeneratorV3/SchemaCollector should collect schemas 1`] = `
+Map {
+  "Pet" => {
+    "properties": {
+      "category": {
+        "$ref": "#/components/schemas/Category",
+      },
+      "id": {
+        "example": 10,
+        "format": "int64",
+        "type": "integer",
+      },
+      "name": {
+        "example": "doggie",
+        "type": "string",
+      },
+      "photoUrls": {
+        "items": {
+          "type": "string",
+          "xml": {
+            "name": "photoUrl",
+          },
+        },
+        "type": "array",
+        "xml": {
+          "wrapped": true,
+        },
+      },
+      "status": {
+        "description": "pet status in the store",
+        "enum": [
+          "available",
+          "pending",
+          "sold",
+        ],
+        "type": "string",
+      },
+      "tags": {
+        "items": {
+          "$ref": "#/components/schemas/Tag",
+        },
+        "type": "array",
+        "xml": {
+          "wrapped": true,
+        },
+      },
+    },
+    "required": [
+      "name",
+      "photoUrls",
+    ],
+    "type": "object",
+    "xml": {
+      "name": "pet",
+    },
+  },
+  "UnnamedSchema1" => {
+    "format": "binary",
+    "type": "string",
+  },
+  "Order" => {
+    "properties": {
+      "complete": {
+        "type": "boolean",
+      },
+      "id": {
+        "example": 10,
+        "format": "int64",
+        "type": "integer",
+      },
+      "petId": {
+        "example": 198772,
+        "format": "int64",
+        "type": "integer",
+      },
+      "quantity": {
+        "example": 7,
+        "format": "int32",
+        "type": "integer",
+      },
+      "shipDate": {
+        "format": "date-time",
+        "type": "string",
+      },
+      "status": {
+        "description": "Order Status",
+        "enum": [
+          "placed",
+          "approved",
+          "delivered",
+        ],
+        "example": "approved",
+        "type": "string",
+      },
+    },
+    "type": "object",
+    "xml": {
+      "name": "order",
+    },
+  },
+  "User" => {
+    "properties": {
+      "email": {
+        "example": "john@email.com",
+        "type": "string",
+      },
+      "firstName": {
+        "example": "John",
+        "type": "string",
+      },
+      "id": {
+        "example": 10,
+        "format": "int64",
+        "type": "integer",
+      },
+      "lastName": {
+        "example": "James",
+        "type": "string",
+      },
+      "password": {
+        "example": "12345",
+        "type": "string",
+      },
+      "phone": {
+        "example": "12345",
+        "type": "string",
+      },
+      "userStatus": {
+        "description": "User Status",
+        "example": 1,
+        "format": "int32",
+        "type": "integer",
+      },
+      "username": {
+        "example": "theUser",
+        "type": "string",
+      },
+    },
+    "type": "object",
+    "xml": {
+      "name": "user",
+    },
+  },
+  "UnnamedSchema2" => {
+    "items": {
+      "$ref": "#/components/schemas/User",
+    },
+    "type": "array",
+  },
+  "UnnamedSchema3" => {
+    "items": {
+      "$ref": "#/components/schemas/Pet",
+    },
+    "type": "array",
+  },
+  "UnnamedSchema4" => {
+    "items": {
+      "$ref": "#/components/schemas/Pet",
+    },
+    "type": "array",
+  },
+  "UnnamedSchema5" => {
+    "items": {
+      "$ref": "#/components/schemas/Pet",
+    },
+    "type": "array",
+  },
+  "UnnamedSchema6" => {
+    "items": {
+      "$ref": "#/components/schemas/Pet",
+    },
+    "type": "array",
+  },
+  "ApiResponse" => {
+    "properties": {
+      "code": {
+        "format": "int32",
+        "type": "integer",
+      },
+      "message": {
+        "type": "string",
+      },
+      "type": {
+        "type": "string",
+      },
+    },
+    "type": "object",
+    "xml": {
+      "name": "##default",
+    },
+  },
+  "UnnamedSchema7" => {
+    "additionalProperties": {
+      "format": "int32",
+      "type": "integer",
+    },
+    "type": "object",
+  },
+  "UnnamedSchema8" => {
+    "type": "string",
+  },
+  "UnnamedSchema9" => {
+    "type": "string",
+  },
+  "AuxillarySchema1" => {
+    "example": 10,
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema2" => {
+    "example": "doggie",
+    "type": "string",
+  },
+  "Category" => {
+    "properties": {
+      "id": {
+        "example": 1,
+        "format": "int64",
+        "type": "integer",
+      },
+      "name": {
+        "example": "Dogs",
+        "type": "string",
+      },
+    },
+    "type": "object",
+    "xml": {
+      "name": "category",
+    },
+  },
+  "AuxillarySchema3" => {
+    "items": {
+      "type": "string",
+      "xml": {
+        "name": "photoUrl",
+      },
+    },
+    "type": "array",
+    "xml": {
+      "wrapped": true,
+    },
+  },
+  "AuxillarySchema4" => {
+    "items": {
+      "$ref": "#/components/schemas/Tag",
+    },
+    "type": "array",
+    "xml": {
+      "wrapped": true,
+    },
+  },
+  "AuxillarySchema5" => {
+    "description": "pet status in the store",
+    "enum": [
+      "available",
+      "pending",
+      "sold",
+    ],
+    "type": "string",
+  },
+  "AuxillarySchema6" => {
+    "example": 10,
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema7" => {
+    "example": 198772,
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema8" => {
+    "example": 7,
+    "format": "int32",
+    "type": "integer",
+  },
+  "AuxillarySchema9" => {
+    "format": "date-time",
+    "type": "string",
+  },
+  "AuxillarySchema10" => {
+    "description": "Order Status",
+    "enum": [
+      "placed",
+      "approved",
+      "delivered",
+    ],
+    "example": "approved",
+    "type": "string",
+  },
+  "AuxillarySchema11" => {
+    "type": "boolean",
+  },
+  "AuxillarySchema12" => {
+    "example": 10,
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema13" => {
+    "example": "theUser",
+    "type": "string",
+  },
+  "AuxillarySchema14" => {
+    "example": "John",
+    "type": "string",
+  },
+  "AuxillarySchema15" => {
+    "example": "James",
+    "type": "string",
+  },
+  "AuxillarySchema16" => {
+    "example": "john@email.com",
+    "type": "string",
+  },
+  "AuxillarySchema17" => {
+    "example": "12345",
+    "type": "string",
+  },
+  "AuxillarySchema18" => {
+    "example": "12345",
+    "type": "string",
+  },
+  "AuxillarySchema19" => {
+    "description": "User Status",
+    "example": 1,
+    "format": "int32",
+    "type": "integer",
+  },
+  "AuxillarySchema20" => {
+    "format": "int32",
+    "type": "integer",
+  },
+  "AuxillarySchema21" => {
+    "type": "string",
+  },
+  "AuxillarySchema22" => {
+    "type": "string",
+  },
+  "AuxillarySchema23" => {
+    "format": "int32",
+    "type": "integer",
+  },
+  "AuxillarySchema24" => {
+    "example": 1,
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema25" => {
+    "example": "Dogs",
+    "type": "string",
+  },
+  "AuxillarySchema26" => {
+    "type": "string",
+    "xml": {
+      "name": "photoUrl",
+    },
+  },
+  "Tag" => {
+    "properties": {
+      "id": {
+        "format": "int64",
+        "type": "integer",
+      },
+      "name": {
+        "type": "string",
+      },
+    },
+    "type": "object",
+    "xml": {
+      "name": "tag",
+    },
+  },
+  "AuxillarySchema27" => {
+    "format": "int64",
+    "type": "integer",
+  },
+  "AuxillarySchema28" => {
+    "type": "string",
+  },
+}
+`;

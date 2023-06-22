@@ -1,5 +1,5 @@
 import { expect, describe, it } from '@jest/globals';
-import { PathsObject } from 'openapi3-ts';
+import { PathsObject } from 'openapi3-ts/oas30';
 
 import { PathCollector } from './PathCollector';
 

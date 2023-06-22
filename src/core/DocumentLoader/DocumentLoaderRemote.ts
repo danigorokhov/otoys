@@ -16,8 +16,10 @@ export class DocumentLoaderRemote extends DocumentLoaderBase {
     }
 
     public async load() {
+        // Got supports only json
         const documentFetched = await got(this.url).json();
 
+        // Uses base document validation
         const documentValidated = DocumentLoaderRemote.validate(documentFetched);
 
         return documentValidated;

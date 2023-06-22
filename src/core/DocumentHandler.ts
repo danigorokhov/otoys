@@ -11,6 +11,7 @@ export class DocumentHandler {
     public async load() {
         const { config } = this.registry;
 
+        // Initializes document loader by type
         let documentLoader: DocumentLoaderBase;
         if (config.document.type === 'local') {
             documentLoader = new DocumentLoaderLocal({
