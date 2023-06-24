@@ -10,8 +10,7 @@ export class DocumentHandler {
     constructor(private registry: Registry) {}
 
     public async load() {
-        const { config } = this.registry;
-        const { documentLoader: documentLoaderConfig } = config;
+        const { documentLoader: documentLoaderConfig } = this.registry.config;
 
         // Initializes document loader by type
         let documentLoader: DocumentLoaderBase;

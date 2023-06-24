@@ -4,7 +4,7 @@ import { CancelableRequest, Response } from 'got';
 
 import { DocumentLoaderRemote } from './DocumentLoaderRemote';
 
-describe('DocumentLoader -> DocumentLoaderRemote', () => {
+describe('DocumentLoader/DocumentLoaderRemote', () => {
     const gotJsonMock = jest.fn(() => ({
         openapi: '',
         info: {},

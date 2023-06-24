@@ -15,7 +15,7 @@ resolveMock.mockReturnValue('/path');
 const extnameMock = extname as jest.Mocked<typeof extname>;
 extnameMock.mockReturnValue('.json');
 
-describe('DocumentLoader -> DocumentLoaderLocal', () => {
+describe('DocumentLoader/DocumentLoaderLocal', () => {
     const cwdMock = jest.spyOn(process, 'cwd').mockReturnValue('/cwd');
     const parseMock = jest.spyOn(DocumentLoaderLocal, 'parse').mockReturnValue({});
     const validateMock = jest.spyOn(DocumentLoaderLocal, 'validate').mockReturnValue({
