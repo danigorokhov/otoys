@@ -3,7 +3,7 @@ import {
     OpenAPIObject,
     ResponseObject,
     RequestBodyObject,
-    PathItemObject,
+    isReferenceObject,
 } from 'openapi3-ts/oas30';
 import get from 'lodash/get';
 
@@ -12,26 +12,19 @@ import {
     isResponseObject,
     isRequestBodyObject,
     isSchemaObject,
-} from '../utils/typePredicates';
-import { SchemaEntry } from '../types/schema';
+} from '../../utils/typePredicates';
+import { SchemaEntry } from '../../types/schema';
+import {
+    RefParsed,
+    PathItemObjectResolved,
+    RequestBodyObjectResolved,
+    ResponseObjectResolved,
+} from './types';
+import { validateSchemaName } from './utils';
 
-type RefParsed = {
-    root: OpenAPIObject;
-    path: string[];
-};
-
-// TODO maybe on higher level along with entire schema validation
-type ValidateSchemaName = (name: string) => void;
-
-const validateSchemaName: ValidateSchemaName = name => {
-    if (name.match(/\W/)) {
-        throw new Error(
-            'validateSchemaName: schema name must consists of ASCII based characters'
-        );
-    }
-}
-
-// TODO support all cases from guide https://swagger.io/docs/specification/using-ref/
+/**
+ * Resolves objects in document by reference. Reference corresponds RFC3986.
+ */
 export class RefResolver {
     constructor(private document: OpenAPIObject) {}
 
@@ -51,7 +44,7 @@ export class RefResolver {
     }
 
     /**
-     * Validate reference
+     * Validates reference
      * @returns reference in format `#[\w/]+`
      */
     public validateRef(ref: string): string {
@@ -84,7 +77,17 @@ export class RefResolver {
             .substring(1)
             .split('/');
 
-        const path = pathRaw.filter(pathPart => pathPart.length !== 0);
+        // https://swagger.io/docs/specification/using-ref/#escape
+        const pathUnescaped = pathRaw.map(pathPart => {
+            // Order is worth. If tilde is unescaped firstly, it can be created one more '~1' combination.
+            // For instance: '/test~01' becomes '/test/' instead of '/test~1'.
+            const withUnescapedSlash = pathPart.replaceAll('~1', '/');
+            const withUnescapedTilde = withUnescapedSlash.replaceAll('~0', '~');
+
+            return withUnescapedTilde;
+        });
+
+        const path = pathUnescaped.filter(pathPart => pathPart.length !== 0);
 
         return {
             root: this.document,
@@ -92,9 +95,7 @@ export class RefResolver {
         };
     }
 
-    // TODO support refs to document.paths['/path/with/slashes/inside']
-    // https://swagger.io/docs/specification/using-ref/
-    public resolvePath(ref: string): PathItemObject {
+    public resolvePath(ref: string): PathItemObjectResolved {
         const {
             root,
             path: refPath,
@@ -117,7 +118,7 @@ export class RefResolver {
         return path;
     }
 
-    public resolveRequestBody(ref: string): RequestBodyObject {
+    public resolveRequestBody(ref: string): RequestBodyObjectResolved {
         const {
             root,
             path,
@@ -131,16 +132,41 @@ export class RefResolver {
             );
         }
 
-        if (!isRequestBodyObject(requestBody)) {
+        if (!isRequestBodyObject(requestBody) && !isReferenceObject(requestBody)) {
             throw new Error(
-                `RefResolver: requestBody resolving failed. Resolved object isn't of type RequestBodyObject. Passed reference: ${ref}`
+                `RefResolver: requestBody resolving failed. Resolved object isn't of type RequestBodyObject or ReferenceObject. Passed reference: ${ref}`
             );
         }
 
         return requestBody;
     }
 
-    public resolveResponse(ref: string): ResponseObject {
+    public resolveRequestBodyDeep(ref: string, limit: number = 100): RequestBodyObject {
+        let counter = 0;
+        let requestBody = this.resolveRequestBody(ref);
+
+        while (counter < limit && isReferenceObject(requestBody)) {
+            requestBody = this.resolveRequestBody(requestBody.$ref);
+
+            counter++;
+        }
+
+        if (counter >= limit) {
+            throw new Error(
+                `RefResolver: requestBody resolving failed. Too many nested references, limit ${limit} exceeded. Passed reference: ${ref}`,
+            );
+        }
+
+        if (isReferenceObject(requestBody)) {
+            throw new Error(
+                `RefResolver: unexpected error, requestBody is reference. Passed reference: ${ref}`,
+            );
+        }
+
+        return requestBody;
+    }
+
+    public resolveResponse(ref: string): ResponseObjectResolved {
         const {
             root,
             path,
@@ -154,13 +180,38 @@ export class RefResolver {
             );
         }
 
-        if (!isResponseObject(response)) {
+        if (!isResponseObject(response) && !isReferenceObject(response)) {
             throw new Error(
-                `RefResolver: response resolving failed. Resolved object isn't of type ResponseObject. Passed reference: ${ref}`
+                `RefResolver: response resolving failed. Resolved object isn't of type ResponseObject or ReferenceObject. Passed reference: ${ref}`
             );
         }
 
         return response;
+    }
+
+    public resolveResponseDeep(ref: string, limit: number = 100): ResponseObject {
+        let counter = 0;
+        let responseObject = this.resolveResponse(ref);
+
+        while (counter < limit && isReferenceObject(responseObject)) {
+            responseObject = this.resolveResponse(responseObject.$ref);
+
+            counter++;
+        }
+
+        if (counter >= limit) {
+            throw new Error(
+                `RefResolver: response resolving failed. Too many nested references, limit ${limit} exceeded. Passed reference: ${ref}`,
+            );
+        }
+
+        if (isReferenceObject(responseObject)) {
+            throw new Error(
+                `RefResolver: unexpected error, response is reference. Passed reference: ${ref}`,
+            );
+        }
+
+        return responseObject;
     }
 
     public resolveSchema(ref: string): SchemaEntry {

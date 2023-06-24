@@ -15,8 +15,8 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
                 version: '0.0.1'
             },
             paths: {
-                TestPath: {
-                    description: 'TestPath',
+                '/path/to/api': {
+                    description: '/path/to/api',
                 },
             },
             components: {
@@ -25,16 +25,23 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
                         description: 'TestRequestBody',
                         content: {},
                     },
+                    TestRequestBodyRef: {
+                        $ref: '#/components/requestBodies/TestRequestBody',
+                    },
                 },
                 responses: {
                     TestResponse: {
                         description: 'TestResponse',
+                    },
+                    TestResponseRef: {
+                        $ref: '#/components/responses/TestResponse',
                     },
                 },
                 schemas: {
                     TestSchema: {
                         description: 'TestSchema',
                     },
+                    // TODO test ref for schemas
                 },
             },
         };
@@ -48,7 +55,7 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             expect(resolver.isValidURL('#/components/schemas/Test')).toBe(false);
             expect(resolver.isValidURL('petstore.json')).toBe(false);
             expect(resolver.isValidURL('petstore.json#/paths/test')).toBe(false);
-            expect(resolver.isValidURL('://test.com')).toBe(false);
+            expect(resolver.isValidURL('//test.com')).toBe(false);
         });
 
         it('should return true for valid URLs', () => {
@@ -108,6 +115,22 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'test']);
         });
 
+        it('should unescape slash', () => {
+            const ref = '#/components/te~1st';
+
+            jest.spyOn(resolver, 'validateRef').mockReturnValueOnce(ref);
+
+            expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'te/st']);
+        });
+
+        it('should unescape tilde', () => {
+            const ref = '#/components/te~01st';
+
+            jest.spyOn(resolver, 'validateRef').mockReturnValueOnce(ref);
+
+            expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'te~1st']);
+        });
+
         it('should filter empty parts of ref', () => {
             const ref = '#/components//test';
 
@@ -119,15 +142,15 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
 
     describe('resolvePath', () => {
         it('should resolve object by reference', () => {
-            const ref = '#/paths/TestPath';
+            const ref = '#/paths/~1path~1to~1api';
 
             jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
                 root: document,
-                path: ['paths', 'TestPath'],
+                path: ['paths', '/path/to/api'],
             });
 
             expect(resolver.resolvePath(ref)).toStrictEqual({
-                description: 'TestPath',
+                description: '/path/to/api',
             });
         });
 
@@ -150,7 +173,7 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
     });
 
     describe('resolveRequestBody', () => {
-        it('should resolve object by reference', () => {
+        it('should resolve requestBodyObject by reference', () => {
             const ref = '#/components/requestBodies/TestRequestBody';
 
             jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
@@ -161,6 +184,19 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             expect(resolver.resolveRequestBody(ref)).toStrictEqual({
                 content: {},
                 description: 'TestRequestBody',
+            });
+        });
+
+        it('should resolve referenceObject by reference', () => {
+            const ref = '#/components/requestBodies/TestRequestBodyRef';
+
+            jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
+                root: document,
+                path: ['components', 'requestBodies', 'TestRequestBodyRef'],
+            });
+
+            expect(resolver.resolveRequestBody(ref)).toStrictEqual({
+                $ref: '#/components/requestBodies/TestRequestBody',
             });
         });
 
@@ -179,11 +215,83 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             );
         });
 
-        it.todo('should throw if resolved object isn\'t RequestBodyObject');
+        it.todo('should throw if resolved object isn\'t either RequestBodyObject or ReferenceObject');
+    });
+
+    describe('resolveRequestBodyDeep', () => {
+        it('should resolve nested requestBody', () => {
+            const ref = '#/components/requestBodies/TestRequestBody1';
+
+            const document: OpenAPIObject = {
+                openapi: '3.0.2',
+                info: {
+                    title: 'Test',
+                    version: '0.0.1'
+                },
+                paths: {},
+                components: {
+                    requestBodies: {
+                        TestRequestBody1: {
+                            $ref: '#/components/requestBodies/TestRequestBody2',
+                        },
+                        TestRequestBody2: {
+                            content: {},
+                            description: 'TestRequestBody2',
+                        },
+                    },
+                },
+            };
+
+            jest.spyOn(resolver, 'parseRef')
+                .mockReturnValueOnce({
+                    root: document,
+                    path: ['components', 'requestBodies', 'TestRequestBody1'],
+                })
+                .mockReturnValueOnce({
+                    root: document,
+                    path: ['components', 'requestBodies', 'TestRequestBody2'],
+                });
+
+            expect(resolver.resolveRequestBodyDeep(ref)).toStrictEqual({
+                content: {},
+                description: 'TestRequestBody2',
+            });
+        });
+
+        it('should throw for looped references', () => {
+            const ref = '#/components/requestBodies/TestRequestBody1';
+
+            const document: OpenAPIObject = {
+                openapi: '3.0.2',
+                info: {
+                    title: 'Test',
+                    version: '0.0.1'
+                },
+                paths: {},
+                components: {
+                    requestBodies: {
+                        TestRequestBody1: {
+                            $ref: '#/components/requestBodies/TestRequestBody1',
+                        },
+                    },
+                },
+            };
+
+            jest.spyOn(resolver, 'parseRef').mockReturnValue({
+                root: document,
+                path: ['components', 'requestBodies', 'TestRequestBody1'],
+            });
+
+            expect(
+                () => resolver.resolveRequestBodyDeep(ref, 100),
+            ).toThrow(
+                'RefResolver: requestBody resolving failed. Too many nested references, limit 100 exceeded. Passed reference: #/components/requestBodies/TestRequestBody1',
+            );
+        });
     });
 
     describe('resolveResponse', () => {
-        it('should resolve object by reference', () => {
+        it('should resolve responseObject by reference', () => {
             const ref = '#/components/responses/TestResponse';
 
             jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
@@ -193,6 +301,19 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
 
             expect(resolver.resolveResponse(ref)).toStrictEqual({
                 description: 'TestResponse',
+            });
+        });
+
+        it('should resolve referenceObject by reference', () => {
+            const ref = '#/components/responses/TestResponseRef';
+
+            jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
+                root: document,
+                path: ['components', 'responses', 'TestResponseRef'],
+            });
+
+            expect(resolver.resolveResponse(ref)).toStrictEqual({
+                $ref: '#/components/responses/TestResponse',
             });
         });
 
@@ -211,7 +332,77 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             );
         });
 
-        it.todo('should throw if resolved object isn\'t ResponseObject');
+        it.todo('should throw if resolved object isn\'t either ResponseObject or ReferenceObject');
+    });
+
+    describe('resolveResponseDeep', () => {
+        it('should resolve nested response', () => {
+            const ref = '#/components/responses/TestResponse1';
+
+            const document: OpenAPIObject = {
+                openapi: '3.0.2',
+                info: {
+                    title: 'Test',
+                    version: '0.0.1'
+                },
+                paths: {},
+                components: {
+                    responses: {
+                        TestResponse1: {
+                            $ref: '#/components/responses/TestResponse2',
+                        },
+                        TestResponse2: {
+                            description: 'TestResponse2',
+                        },
+                    },
+                },
+            };
+
+            jest.spyOn(resolver, 'parseRef')
+                .mockReturnValueOnce({
+                    root: document,
+                    path: ['components', 'responses', 'TestResponse1'],
+                })
+                .mockReturnValueOnce({
+                    root: document,
+                    path: ['components', 'responses', 'TestResponse2'],
+                });
+
+            expect(resolver.resolveResponseDeep(ref)).toStrictEqual({
+                description: 'TestResponse2',
+            });
+        });
+
+        it('should throw for looped references', () => {
+            const ref = '#/components/responses/TestResponse1';
+
+            const document: OpenAPIObject = {
+                openapi: '3.0.2',
+                info: {
+                    title: 'Test',
+                    version: '0.0.1'
+                },
+                paths: {},
+                components: {
+                    responses: {
+                        TestResponse1: {
+                            $ref: '#/components/responses/TestResponse1',
+                        },
+                    },
+                },
+            };
+
+            jest.spyOn(resolver, 'parseRef').mockReturnValue({
+                root: document,
+                path: ['components', 'responses', 'TestResponse1'],
+            });
+
+            expect(
+                () => resolver.resolveResponseDeep(ref, 100),
+            ).toThrow(
+                'RefResolver: response resolving failed. Too many nested references, limit 100 exceeded. Passed reference: #/components/responses/TestResponse1',
+            );
+        });
     });
 
     describe('resolveSchema', () => {
@@ -245,6 +436,6 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
         });
 
         it.todo('should throw if resolved object isn\'t SchemaObject');
-        it.todo('tests for schemaName');
+        it.todo('tests for schemaName validation');
     });
 });
