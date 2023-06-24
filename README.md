@@ -22,7 +22,13 @@ npm ci
 
 3. Describe `otoysrc.json` configuration file
 
-4. Run `otoys` via npm script
+4. Build `otoys`
+
+```bash
+npm run build
+```
+
+5. Run `otoys` via npm script
 
 ```bash
 npm run e2e
