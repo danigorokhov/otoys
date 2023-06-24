@@ -1,8 +1,7 @@
 import { OpenAPIObject } from 'openapi3-ts/oas30';
 import YAML from 'yaml';
 
-// Local type for loading
-export type DocumentType = 'yaml' | 'json';
+import { DocumentType } from '../types/document';
 
 export abstract class DocumentLoaderBase {
     static validate(document: unknown) {
