@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TypesGenerator/TypesGeneratorV3/ASTBuilderTypes should build AST 1`] = `
+exports[`TypesGenerator/TypesGeneratorV3/ASTBuilderTypes should build AST for petstore3 API 1`] = `
 [
   NodeObject {
     "end": -1,

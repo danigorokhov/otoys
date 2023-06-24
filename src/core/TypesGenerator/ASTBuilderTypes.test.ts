@@ -10,7 +10,7 @@ import petstore3 from '../../../examples/v3/petstore3.json';
 
 describe('TypesGenerator/TypesGeneratorV3/ASTBuilderTypes', () => {
     // TODO more detailed tests
-    it('should build AST', () => {
+    it('should build AST for petstore3 API', () => {
         const document = petstore3 as unknown as OpenAPIObject;
         const resolver = new RefResolver(document);
         const pathCollector = new PathCollector(document.paths, undefined);
