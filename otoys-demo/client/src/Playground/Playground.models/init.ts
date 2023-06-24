@@ -7,10 +7,16 @@ import { $swaggerDocument } from '../../SwaggerDocumentEditor';
 const $generatorParams = combine(
     $generatorSettings,
     $swaggerDocument,
-    (generatorSettings, document) => ({
-        generatorSettings,
-        document,
-    }),
+    (generatorSettings, document) => {
+        return {
+            generatorSettings: {
+                pathWhitelist: generatorSettings.pathWhitelist,
+                typeSuffix: generatorSettings.typeSuffix,
+            },
+            generatorType: generatorSettings.type,
+            document,
+        };
+    },
 );
 
 const $generatorParamsThrottled = throttle({

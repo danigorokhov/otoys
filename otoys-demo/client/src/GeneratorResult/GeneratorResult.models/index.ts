@@ -1,18 +1,21 @@
 import { createStore, createEvent, createEffect } from 'effector';
 import {status} from 'patronum';
-import {GeneratorSettings} from '../../../@types/generatorSettings';
+import {GeneratorSettings} from '../../../@types/generator';
 
 export const $generatorResult = createStore('');
 export const generatorResultChanged = createEvent<string>();
 
 type LoadGeneratorResultParams = {
-    generatorSettings: GeneratorSettings;
     document: string;
+    generatorSettings: Omit<GeneratorSettings, 'type'>;
+    generatorType: GeneratorSettings['type'];
 };
 
 type LoadGeneratorResultFx = (params: LoadGeneratorResultParams) => Promise<string>;
 
-type ApiGenerateResponse = { // TODO to generated types
+// TODO use otoys to generate types for interacting with API
+// TODO common type with backend
+type ApiGenerateResponse = {
     result: string;
 };
 

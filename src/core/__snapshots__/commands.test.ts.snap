@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands/generate should generate types for one-password-events API 1`] = `
+"export type Introspection = {
+    Features?: string[];
+    IssuedAt?: DateTimeRFC3339;
+    UUID?: string;
+};
+export type Error = {
+    Error?: {
+        Message?: string;
+    };
+};
+export type ItemUsageItems = {
+    items?: ItemUsage[];
+} & CursorCollection;
+export type SignInAttemptItems = {
+    items?: SignInAttempt[];
+} & CursorCollection;
+export type Cursor = {
+    cursor?: string;
+};
+export type ResetCursor = {
+    end_time?: DateTimeRFC3339;
+    limit?: number;
+    start_time?: DateTimeRFC3339;
+};
+export type DateTimeRFC3339 = string;
+export type CursorCollection = Cursor & {
+    has_more?: boolean;
+};
+export type ItemUsage = {
+    action?: Action;
+    client?: Client;
+    item_uuid?: UUID;
+    timestamp?: DateTimeRFC3339;
+    used_version?: number;
+    user?: User;
+    uuid?: UUID;
+    vault_uuid?: UUID;
+};
+export type SignInAttempt = {
+    category?: "success" | "credentials_failed" | "mfa_failed" | "modern_version_failed" | "firewall_failed" | "firewall_reported_success";
+    client?: Client;
+    country?: string;
+    details?: Details;
+    session_uuid?: UUID;
+    target_user?: User;
+    timestamp?: DateTimeRFC3339;
+    type?: "credentials_ok" | "mfa_ok" | "password_secret_bad" | "mfa_missing" | "totp_disabled" | "totp_bad" | "totp_timeout" | "u2f_disabled" | "u2f_bad" | "u2f_timout" | "duo_disabled" | "duo_bad" | "duo_timeout" | "duo_native_bad" | "platform_secret_disabled" | "platform_secret_bad" | "platform_secret_proxy" | "code_disabled" | "code_bad" | "code_timeout" | "ip_blocked" | "continent_blocked" | "country_blocked" | "anonymous_blocked" | "all_blocked" | "modern_version_missing" | "modern_version_old";
+    uuid?: UUID;
+};
+export type Action = unknown;
+export type Client = {
+    app_name?: string;
+    app_version?: string;
+    ip_address?: string;
+    os_name?: string;
+    os_version?: string;
+    platform_name?: string;
+    platform_version?: string;
+};
+export type UUID = string;
+export type User = {
+    email?: string;
+    name?: string;
+    uuid?: UUID;
+};
+export type Details = {
+    value?: string;
+};
+"
+`;
+
+exports[`commands/generate should generate types for petstore3 API 1`] = `
+"export type Pet = {
+    id?: number;
+    name: string;
+    category?: Category;
+    photoUrls: string[];
+    tags?: Tag[];
+    status?: "available" | "pending" | "sold";
+};
+export type Order = {
+    id?: number;
+    petId?: number;
+    quantity?: number;
+    shipDate?: string;
+    status?: "placed" | "approved" | "delivered";
+    complete?: boolean;
+};
+export type User = {
+    id?: number;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    password?: string;
+    phone?: string;
+    userStatus?: number;
+};
+export type ApiResponse = {
+    code?: number;
+    type?: string;
+    message?: string;
+};
+export type Category = {
+    id?: number;
+    name?: string;
+};
+export type Tag = {
+    id?: number;
+    name?: string;
+};
+"
+`;

@@ -1,7 +1,9 @@
 {
   "GeneratorSettings": {
     "title": "Generator settings",
-    "swagger-typescript-api.typeSuffix.label": "Type suffix",
-    "swagger-typescript-api.typeSuffix.placeholder": "DTO"
+    "field.type.label": "Generator",
+    "field.swagger-typescript-api.typeSuffix.label": "Type suffix",
+    "field.swagger-typescript-api.typeSuffix.placeholder": "DTO",
+    "field.otoys.pathWhitelist.label": "Regular expression to filter API paths"
   }
 }
