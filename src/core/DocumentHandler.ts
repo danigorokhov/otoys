@@ -2,6 +2,7 @@ import {
     DocumentLoaderBase,
     DocumentLoaderLocal,
     DocumentLoaderRemote,
+    DocumentLoaderInline,
 } from './DocumentLoader';
 import { Registry } from './Registry';
 
@@ -24,6 +25,12 @@ export class DocumentHandler {
             case 'remote':
                 documentLoader = new DocumentLoaderRemote({
                     url: documentLoaderConfig.url,
+                });
+                break;
+            case 'inline':
+                documentLoader = new DocumentLoaderInline({
+                    content: documentLoaderConfig.content,
+                    documentType: documentLoaderConfig.documentType,
                 });
                 break;
         }
