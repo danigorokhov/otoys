@@ -3,11 +3,13 @@ import {
     PathItemObject,
     SchemaObject,
 } from 'openapi3-ts/oas30';
+import { NodeArray, Node } from 'typescript';
 
 import { Registry } from '../Registry';
 import { SchemaName } from '../types/schema';
 import { PathCollector } from './PathCollector';
 import { SchemaCollector } from './SchemaCollector';
+import { ASTBuilderTypes } from './ASTBuilderTypes';
 import { RefResolver } from './RefResolver';
 
 export class TypesGeneratorV3 {
@@ -19,12 +21,10 @@ export class TypesGeneratorV3 {
         this.refResolver = new RefResolver(document);
     }
 
-    public async generate() {
+    public generate(): NodeArray<Node> {
         this.prepare();
 
-        this.createASTNodes();
-
-        this.print(); // TODO option to get result as a string
+        return this.buildAST();
     }
 
     private prepare() {
@@ -41,22 +41,12 @@ export class TypesGeneratorV3 {
         this.schemas = schemaCollector.collect();
     }
 
-    // TODO rename
-    private createASTNodes() {
-        this.createASTNodeFromSchema();
-    }
-    private createASTNodeFromSchema() {
-        throw new Error("Not implemented createASTNodeFromSchema");
-    }
+    private buildAST(): NodeArray<Node> {
+        const builder = new ASTBuilderTypes(
+            this.schemas,
+            this.refResolver,
+        );
 
-    private print() { // TODO use Printer
-        this.createASTPrinter();
-        this.createOutputFile();
-    }
-    private createASTPrinter() {
-        throw new Error("Not implemented createASTPrinter");
-    }
-    private createOutputFile() {
-        throw new Error("Not implemented createOutputFile");
+        return builder.build();
     }
 }
