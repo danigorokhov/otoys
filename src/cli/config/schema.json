@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "Document": {
+        "DocumentLoader": {
             "anyOf": [
                 {
                     "properties": {
@@ -30,16 +30,69 @@
                         }
                     },
                     "type": "object"
+                },
+                {
+                    "properties": {
+                        "content": {
+                            "type": "string"
+                        },
+                        "documentType": {
+                            "$ref": "#/definitions/DocumentType"
+                        },
+                        "type": {
+                            "enum": [
+                                "inline"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "DocumentType": {
+            "enum": [
+                "json",
+                "yaml"
+            ],
+            "type": "string"
+        },
+        "Output": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "path": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "enum": [
+                                "Local"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "Inline"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
                 }
             ]
         }
     },
     "properties": {
-        "document": {
-            "$ref": "#/definitions/Document"
+        "documentLoader": {
+            "$ref": "#/definitions/DocumentLoader"
         },
         "output": {
-            "type": "string"
+            "$ref": "#/definitions/Output"
         },
         "pathWhitelist": {
             "type": "string"

@@ -20,15 +20,28 @@ type DocumentLoader =
     | DocumentInline
 ;
 
+type OutputLocal = {
+    type: 'Local',
+    path: string;
+};
+type OutputInline = {
+    type: 'Inline',
+};
+
+type Output =
+    | OutputLocal
+    | OutputInline
+;
+
 export type ConfigOptions = {
     documentLoader: DocumentLoader;
-    output: string;
+    output: Output;
     pathWhitelist?: string;
 };
 
 export class Config {
     public documentLoader: DocumentLoader;
-    public output: string;
+    public output: Output;
     public pathWhitelist?: string;
 
     constructor(configOptions: ConfigOptions) {
