@@ -42,15 +42,16 @@ export class SchemaCollector {
     public saveSchema(
         schema: SchemaObject | ReferenceObject,
         storage: { map: Map<SchemaName, SchemaObject>, entries: SchemaEntry[] },
-        meta: { schemaAttribute?: boolean } = {},
+        meta: { schemaField?: boolean } = {},
     ) {
         const { map, entries } = storage;
 
         let entry: SchemaEntry;
 
         if (isReferenceObject(schema)) {
+            // TODO why resolved schema cannot be ref to another schema
             entry = this.refResolver.resolveSchema(schema.$ref);
-        } else if (meta.schemaAttribute) {
+        } else if (meta.schemaField) {
             entry = this.createAuxillarySchema(schema);
         } else {
             entry = this.createUnnamedSchema(schema);
@@ -116,8 +117,8 @@ export class SchemaCollector {
             } = operationObject;
 
             if (requestBody && isReferenceObject(requestBody)) {
-                // TODO handle path ref
-                throw new Error('SchemaCollector.collect: requestBody.$ref handling isn\'t implemented');
+                const requestBodyResolved = this.refResolver.resolveRequestBody(requestBody.$ref);
+                requestBodyObjects.push(requestBodyResolved);
             } else if (requestBody) {
                 requestBodyObjects.push(requestBody);
             }
@@ -137,8 +138,8 @@ export class SchemaCollector {
             for (const [, responseObject] of Object.entries<ResponseObject | ReferenceObject | undefined>(responsesObject)) {
                 // TODO validate statusCode (it can be stringified number or 'default')
                 if (responseObject && isReferenceObject(responseObject)) {
-                    // TODO handle path ref
-                    throw new Error('SchemaCollector.collect: responsesObject.$ref handling isn\'t implemented');
+                    const responseResolved = this.refResolver.resolveResponse(responseObject.$ref);
+                    responseObjects.push(responseResolved);
                 } else if (responseObject) {
                     responseObjects.push(responseObject);
                 }
@@ -198,7 +199,7 @@ export class SchemaCollector {
                 this.saveSchema(
                     schema,
                     { map: schemasMap, entries: schemaEntries },
-                    { schemaAttribute: true }
+                    { schemaField: true }
                 );
             }
 
