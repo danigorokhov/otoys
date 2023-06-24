@@ -1,2 +1,2 @@
 export { SwaggerDocumentEditor } from './SwaggerDocumentEditor';
-export {$swaggerDocument} from './SwaggerDocumentEditor.models';
+export {$swaggerDocument, swaggerDocumentChanged} from './SwaggerDocumentEditor.models';

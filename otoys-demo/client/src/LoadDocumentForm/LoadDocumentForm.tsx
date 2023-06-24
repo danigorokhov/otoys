@@ -1,6 +1,7 @@
 import React, {FC, useCallback, useMemo} from 'react';
+import { useUnit } from 'effector-react';
 import { LoadDocumentFormProps, LoadDocumentFormValues, HandleSubmit } from './LoadDocumentForm.types';
-import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE, LOAD_DOCUMENT_FORM_DEFAULT_VALUES} from './LoadDocumentForm.const';
+import {DOCUMENT_TYPE_REMOTE, DOCUMENT_TYPE_FILE} from './LoadDocumentForm.const';
 import {cn} from './LoadDocumentForm.cn';
 import './LoadDocumentForm.css';
 import { Text, TextInput, RadioButton, ControlGroupOption } from '@gravity-ui/uikit';
@@ -9,6 +10,8 @@ import { FileInput } from '../FileInput';
 import { SubmitControl } from '../SubmitControl';
 import { getI18nKeysetFn } from './LoadDocumentForm.i18n';
 import { useI18n } from '../utils/i18n';
+import { $loadDocumentParams, loadDocumentParamsChanged } from './LoadDocumentForm.models';
+import './LoadDocumentForm.models/init';
 
 export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
     const {
@@ -28,14 +31,15 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
         },
     ], [i18n]);
 
+    const [loadDocumentParams, setLoadDocumentParamsValue] = useUnit([$loadDocumentParams, loadDocumentParamsChanged]);
+
     const {control, handleSubmit: handleSubmitFactory} = useForm<LoadDocumentFormValues>({
-        defaultValues: LOAD_DOCUMENT_FORM_DEFAULT_VALUES,
+        defaultValues: loadDocumentParams,
     });
 
-    const handleSubmit = useCallback<HandleSubmit>(_formValues => {
-        console.log(_formValues);
-        // TODO handle _formValues of editor settings
-    }, []);
+    const handleSubmit = useCallback<HandleSubmit>(formValues => {
+        setLoadDocumentParamsValue(formValues);
+    }, [setLoadDocumentParamsValue]);
 
     const {field: documentTypeField} = useController({ name: 'documentType', control });
     const {field: urlField} = useController({ name: 'url', control });
@@ -47,6 +51,7 @@ export const LoadDocumentForm: FC<LoadDocumentFormProps> = props => {
                 {i18n('title')}
             </Text>
 
+            {/* TODO extract fields of specific types to separate components */}
             <div className={cn('Field')}>
                 <Text variant="body-2">
                     {i18n('field.documentType.label')}

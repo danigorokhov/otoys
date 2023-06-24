@@ -2,7 +2,8 @@ import {sample, combine} from 'effector';
 import {throttle} from 'patronum';
 import { loadGeneratorResultFx } from '../../GeneratorResult';
 import { $generatorSettings } from '../../GeneratorSettings';
-import { $swaggerDocument } from '../../SwaggerDocumentEditor';
+import { $swaggerDocument, swaggerDocumentChanged } from '../../SwaggerDocumentEditor';
+import { loadDocumentFx } from '../../LoadDocumentForm';
 
 const $generatorParams = combine(
     $generatorSettings,
@@ -27,4 +28,9 @@ const $generatorParamsThrottled = throttle({
 sample({
     clock: $generatorParamsThrottled,
     target: loadGeneratorResultFx,
+});
+
+sample({
+    clock: loadDocumentFx.doneData,
+    target: swaggerDocumentChanged,
 });
