@@ -1,7 +1,8 @@
 import { readFile } from 'fs/promises';
 import { resolve, extname } from 'path';
 
-import { DocumentLoaderBase, DocumentType } from './DocumentLoaderBase';
+import { DocumentType } from '../types/document';
+import { DocumentLoaderBase } from './DocumentLoaderBase';
 
 type DocumentLoaderLocalOptions = {
     path: string;
@@ -34,7 +35,6 @@ export class DocumentLoaderLocal extends DocumentLoaderBase {
 
         const documentRaw = await readFile(pathResolved, { encoding: 'utf8' });
         const documentParsed = DocumentLoaderLocal.parse(documentRaw, documentType);
-        // Uses base document validation
         const documentValidated = DocumentLoaderLocal.validate(documentParsed);
 
         return documentValidated;

@@ -113,4 +113,30 @@ describe('DocumentLoader -> DocumentLoaderLocal', () => {
         expect(validateMock).toBeCalledTimes(1);
         expect(validateMock).toBeCalledWith({ openapi: '', info: {}, paths: {} });
     });
+
+    it('should return validated document', async () => {
+        const documentValidated = {
+            openapi: '3.0.0',
+            info: {
+                version: 'Version',
+                title: 'Title',
+            },
+            paths: {},
+        };
+
+        validateMock.mockReturnValueOnce(documentValidated);
+
+        const documentLoader = new DocumentLoaderLocal({ path: '/document.yml' });
+
+        const document = await documentLoader.load();
+
+        expect(document).toStrictEqual({
+            openapi: '3.0.0',
+            info: {
+                version: 'Version',
+                title: 'Title',
+            },
+            paths: {},
+        });
+    });
 });
