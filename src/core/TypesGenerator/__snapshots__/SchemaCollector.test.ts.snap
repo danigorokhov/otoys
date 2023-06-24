@@ -1,6 +1,494 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TypesGenerator/TypesGeneratorV3/SchemaCollector should collect schemas 1`] = `
+exports[`TypesGenerator/TypesGeneratorV3/SchemaCollector should collect schemas for one-password-events API 1`] = `
+Map {
+  "UnnamedSchema1" => {
+    "oneOf": [
+      {
+        "$ref": "#/components/schemas/Cursor",
+      },
+      {
+        "$ref": "#/components/schemas/ResetCursor",
+      },
+    ],
+  },
+  "UnnamedSchema2" => {
+    "oneOf": [
+      {
+        "$ref": "#/components/schemas/Cursor",
+      },
+      {
+        "$ref": "#/components/schemas/ResetCursor",
+      },
+    ],
+  },
+  "Introspection" => {
+    "properties": {
+      "Features": {
+        "example": [
+          "itemusages",
+          "signinattempts",
+        ],
+        "items": {
+          "type": "string",
+        },
+        "type": "array",
+      },
+      "IssuedAt": {
+        "$ref": "#/components/schemas/DateTimeRFC3339",
+      },
+      "UUID": {
+        "type": "string",
+      },
+    },
+    "type": "object",
+  },
+  "Error" => {
+    "properties": {
+      "Error": {
+        "properties": {
+          "Message": {
+            "description": "The error message.",
+            "type": "string",
+          },
+        },
+        "type": "object",
+      },
+    },
+    "type": "object",
+  },
+  "ItemUsageItems" => {
+    "allOf": [
+      {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemUsage",
+            },
+            "type": "array",
+          },
+        },
+      },
+      {
+        "$ref": "#/components/schemas/CursorCollection",
+      },
+    ],
+    "description": "An object wrapping cursor properties and a list of items usages",
+  },
+  "SignInAttemptItems" => {
+    "allOf": [
+      {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SignInAttempt",
+            },
+            "type": "array",
+          },
+        },
+      },
+      {
+        "$ref": "#/components/schemas/CursorCollection",
+      },
+    ],
+    "description": "An object wrapping cursor properties and a list of sign-in attempts",
+  },
+  "Cursor" => {
+    "description": "Cursor",
+    "properties": {
+      "cursor": {
+        "description": "Cursor to fetch more data if available or continue the polling process if required",
+        "example": "aGVsbG8hIGlzIGl0IG1lIHlvdSBhcmUgbG9va2luZyBmb3IK",
+        "type": "string",
+      },
+    },
+  },
+  "ResetCursor" => {
+    "description": "Reset cursor",
+    "properties": {
+      "end_time": {
+        "$ref": "#/components/schemas/DateTimeRFC3339",
+      },
+      "limit": {
+        "maximum": 1000,
+        "minimum": 1,
+        "type": "number",
+      },
+      "start_time": {
+        "$ref": "#/components/schemas/DateTimeRFC3339",
+      },
+    },
+  },
+  "AuxillarySchema1" => {
+    "example": [
+      "itemusages",
+      "signinattempts",
+    ],
+    "items": {
+      "type": "string",
+    },
+    "type": "array",
+  },
+  "DateTimeRFC3339" => {
+    "example": "2020-06-11T16:32:50-03:00",
+    "format": "date-time",
+    "type": "string",
+  },
+  "AuxillarySchema2" => {
+    "type": "string",
+  },
+  "AuxillarySchema3" => {
+    "properties": {
+      "Message": {
+        "description": "The error message.",
+        "type": "string",
+      },
+    },
+    "type": "object",
+  },
+  "AuxillarySchema4" => {
+    "properties": {
+      "items": {
+        "items": {
+          "$ref": "#/components/schemas/ItemUsage",
+        },
+        "type": "array",
+      },
+    },
+  },
+  "CursorCollection" => {
+    "allOf": [
+      {
+        "$ref": "#/components/schemas/Cursor",
+      },
+      {
+        "properties": {
+          "has_more": {
+            "description": "Whether there may still be more data to fetch using the returned cursor. If true, the subsequent request could still be empty.",
+            "type": "boolean",
+          },
+        },
+      },
+    ],
+    "description": "Common cursor properties for collection responses",
+  },
+  "AuxillarySchema5" => {
+    "properties": {
+      "items": {
+        "items": {
+          "$ref": "#/components/schemas/SignInAttempt",
+        },
+        "type": "array",
+      },
+    },
+  },
+  "AuxillarySchema6" => {
+    "description": "Cursor to fetch more data if available or continue the polling process if required",
+    "example": "aGVsbG8hIGlzIGl0IG1lIHlvdSBhcmUgbG9va2luZyBmb3IK",
+    "type": "string",
+  },
+  "AuxillarySchema7" => {
+    "maximum": 1000,
+    "minimum": 1,
+    "type": "number",
+  },
+  "AuxillarySchema8" => {
+    "type": "string",
+  },
+  "AuxillarySchema9" => {
+    "description": "The error message.",
+    "type": "string",
+  },
+  "AuxillarySchema10" => {
+    "items": {
+      "$ref": "#/components/schemas/ItemUsage",
+    },
+    "type": "array",
+  },
+  "AuxillarySchema11" => {
+    "properties": {
+      "has_more": {
+        "description": "Whether there may still be more data to fetch using the returned cursor. If true, the subsequent request could still be empty.",
+        "type": "boolean",
+      },
+    },
+  },
+  "AuxillarySchema12" => {
+    "items": {
+      "$ref": "#/components/schemas/SignInAttempt",
+    },
+    "type": "array",
+  },
+  "ItemUsage" => {
+    "description": "A single item usage object",
+    "properties": {
+      "action": {
+        "$ref": "#/components/schemas/Action",
+      },
+      "client": {
+        "$ref": "#/components/schemas/Client",
+      },
+      "item_uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+      "timestamp": {
+        "$ref": "#/components/schemas/DateTimeRFC3339",
+      },
+      "used_version": {
+        "type": "integer",
+      },
+      "user": {
+        "$ref": "#/components/schemas/User",
+      },
+      "uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+      "vault_uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+    },
+  },
+  "AuxillarySchema13" => {
+    "description": "Whether there may still be more data to fetch using the returned cursor. If true, the subsequent request could still be empty.",
+    "type": "boolean",
+  },
+  "SignInAttempt" => {
+    "description": "A single sign-in attempt object",
+    "properties": {
+      "category": {
+        "enum": [
+          "success",
+          "credentials_failed",
+          "mfa_failed",
+          "modern_version_failed",
+          "firewall_failed",
+          "firewall_reported_success",
+        ],
+        "example": "firewall_failed",
+        "type": "string",
+      },
+      "client": {
+        "$ref": "#/components/schemas/Client",
+      },
+      "country": {
+        "description": "Country ISO Code",
+        "example": "France",
+        "type": "string",
+      },
+      "details": {
+        "$ref": "#/components/schemas/Details",
+      },
+      "session_uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+      "target_user": {
+        "$ref": "#/components/schemas/User",
+      },
+      "timestamp": {
+        "$ref": "#/components/schemas/DateTimeRFC3339",
+      },
+      "type": {
+        "enum": [
+          "credentials_ok",
+          "mfa_ok",
+          "password_secret_bad",
+          "mfa_missing",
+          "totp_disabled",
+          "totp_bad",
+          "totp_timeout",
+          "u2f_disabled",
+          "u2f_bad",
+          "u2f_timout",
+          "duo_disabled",
+          "duo_bad",
+          "duo_timeout",
+          "duo_native_bad",
+          "platform_secret_disabled",
+          "platform_secret_bad",
+          "platform_secret_proxy",
+          "code_disabled",
+          "code_bad",
+          "code_timeout",
+          "ip_blocked",
+          "continent_blocked",
+          "country_blocked",
+          "anonymous_blocked",
+          "all_blocked",
+          "modern_version_missing",
+          "modern_version_old",
+        ],
+        "example": "continent_blocked",
+        "type": "string",
+      },
+      "uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+    },
+  },
+  "Action" => {},
+  "Client" => {
+    "description": "Metadata gathered about the client",
+    "properties": {
+      "app_name": {
+        "example": "1Password Extension",
+        "type": "string",
+      },
+      "app_version": {
+        "example": "20127",
+        "type": "string",
+      },
+      "ip_address": {
+        "example": "13.227.95.22",
+        "type": "string",
+      },
+      "os_name": {
+        "example": "MacOSX",
+        "type": "string",
+      },
+      "os_version": {
+        "example": "10.15.6",
+        "type": "string",
+      },
+      "platform_name": {
+        "example": "Chrome",
+        "type": "string",
+      },
+      "platform_version": {
+        "description": "Depending on the platform used, this can be the version of the browser that the client extension is installed, the model of computer that the native application is installed or the machine's CPU version that the CLI was installed",
+        "type": "string",
+      },
+    },
+  },
+  "UUID" => {
+    "example": "56YE2TYN2VFYRLNSHKPW5NVT5E",
+    "type": "string",
+  },
+  "AuxillarySchema14" => {
+    "type": "integer",
+  },
+  "User" => {
+    "description": "User object",
+    "properties": {
+      "email": {
+        "format": "email",
+        "type": "string",
+      },
+      "name": {
+        "description": "Full name",
+        "example": "Jack O'Neill",
+        "type": "string",
+      },
+      "uuid": {
+        "$ref": "#/components/schemas/UUID",
+      },
+    },
+  },
+  "AuxillarySchema15" => {
+    "enum": [
+      "success",
+      "credentials_failed",
+      "mfa_failed",
+      "modern_version_failed",
+      "firewall_failed",
+      "firewall_reported_success",
+    ],
+    "example": "firewall_failed",
+    "type": "string",
+  },
+  "AuxillarySchema16" => {
+    "description": "Country ISO Code",
+    "example": "France",
+    "type": "string",
+  },
+  "Details" => {
+    "description": "Additional information about the sign-in attempt",
+    "properties": {
+      "value": {
+        "description": "For firewall prevented sign-ins, the value is the chosen continent, country, etc. that blocked the sign-in attempt",
+        "example": "Europe",
+        "type": "string",
+      },
+    },
+  },
+  "AuxillarySchema17" => {
+    "enum": [
+      "credentials_ok",
+      "mfa_ok",
+      "password_secret_bad",
+      "mfa_missing",
+      "totp_disabled",
+      "totp_bad",
+      "totp_timeout",
+      "u2f_disabled",
+      "u2f_bad",
+      "u2f_timout",
+      "duo_disabled",
+      "duo_bad",
+      "duo_timeout",
+      "duo_native_bad",
+      "platform_secret_disabled",
+      "platform_secret_bad",
+      "platform_secret_proxy",
+      "code_disabled",
+      "code_bad",
+      "code_timeout",
+      "ip_blocked",
+      "continent_blocked",
+      "country_blocked",
+      "anonymous_blocked",
+      "all_blocked",
+      "modern_version_missing",
+      "modern_version_old",
+    ],
+    "example": "continent_blocked",
+    "type": "string",
+  },
+  "AuxillarySchema18" => {
+    "example": "1Password Extension",
+    "type": "string",
+  },
+  "AuxillarySchema19" => {
+    "example": "20127",
+    "type": "string",
+  },
+  "AuxillarySchema20" => {
+    "example": "13.227.95.22",
+    "type": "string",
+  },
+  "AuxillarySchema21" => {
+    "example": "MacOSX",
+    "type": "string",
+  },
+  "AuxillarySchema22" => {
+    "example": "10.15.6",
+    "type": "string",
+  },
+  "AuxillarySchema23" => {
+    "example": "Chrome",
+    "type": "string",
+  },
+  "AuxillarySchema24" => {
+    "description": "Depending on the platform used, this can be the version of the browser that the client extension is installed, the model of computer that the native application is installed or the machine's CPU version that the CLI was installed",
+    "type": "string",
+  },
+  "AuxillarySchema25" => {
+    "format": "email",
+    "type": "string",
+  },
+  "AuxillarySchema26" => {
+    "description": "Full name",
+    "example": "Jack O'Neill",
+    "type": "string",
+  },
+  "AuxillarySchema27" => {
+    "description": "For firewall prevented sign-ins, the value is the chosen continent, country, etc. that blocked the sign-in attempt",
+    "example": "Europe",
+    "type": "string",
+  },
+}
+`;
+
+exports[`TypesGenerator/TypesGeneratorV3/SchemaCollector should collect schemas for petstore3 API 1`] = `
 Map {
   "Pet" => {
     "properties": {

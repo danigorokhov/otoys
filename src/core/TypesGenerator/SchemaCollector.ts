@@ -117,7 +117,7 @@ export class SchemaCollector {
             } = operationObject;
 
             if (requestBody && isReferenceObject(requestBody)) {
-                const requestBodyResolved = this.refResolver.resolveRequestBody(requestBody.$ref);
+                const requestBodyResolved = this.refResolver.resolveRequestBodyDeep(requestBody.$ref);
                 requestBodyObjects.push(requestBodyResolved);
             } else if (requestBody) {
                 requestBodyObjects.push(requestBody);
@@ -138,7 +138,7 @@ export class SchemaCollector {
             for (const [, responseObject] of Object.entries<ResponseObject | ReferenceObject | undefined>(responsesObject)) {
                 // TODO validate statusCode (it can be stringified number or 'default')
                 if (responseObject && isReferenceObject(responseObject)) {
-                    const responseResolved = this.refResolver.resolveResponse(responseObject.$ref);
+                    const responseResolved = this.refResolver.resolveResponseDeep(responseObject.$ref);
                     responseObjects.push(responseResolved);
                 } else if (responseObject) {
                     responseObjects.push(responseObject);

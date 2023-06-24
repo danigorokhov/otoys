@@ -3,7 +3,7 @@ import {
     OpenAPIObject,
     ResponseObject,
     RequestBodyObject,
-    PathItemObject,
+    isReferenceObject,
 } from 'openapi3-ts/oas30';
 import get from 'lodash/get';
 
@@ -12,27 +12,16 @@ import {
     isResponseObject,
     isRequestBodyObject,
     isSchemaObject,
-} from '../utils/typePredicates';
-import { SchemaEntry } from '../types/schema';
+} from '../../utils/typePredicates';
+import { SchemaEntry } from '../../types/schema';
+import {
+    RefParsed,
+    PathItemObjectResolved,
+    RequestBodyObjectResolved,
+    ResponseObjectResolved,
+} from './types';
+import { validateSchemaName } from './utils';
 
-type RefParsed = {
-    root: OpenAPIObject;
-    path: string[];
-};
-
-// TODO maybe on higher level along with entire schema validation
-type ValidateSchemaName = (name: string) => void;
-
-const validateSchemaName: ValidateSchemaName = name => {
-    if (name.match(/\W/)) {
-        throw new Error(
-            'validateSchemaName: schema name must consists of ASCII based characters'
-        );
-    }
-}
-
-// TODO think of nested refs (inside components.schemas['schema'] there is $ref field)
-// TODO support all cases from guide https://swagger.io/docs/specification/using-ref/
 /**
  * Resolves objects in document by reference. Reference corresponds RFC3986.
  */
@@ -106,7 +95,7 @@ export class RefResolver {
         };
     }
 
-    public resolvePath(ref: string): PathItemObject {
+    public resolvePath(ref: string): PathItemObjectResolved {
         const {
             root,
             path: refPath,
@@ -129,7 +118,7 @@ export class RefResolver {
         return path;
     }
 
-    public resolveRequestBody(ref: string): RequestBodyObject {
+    public resolveRequestBody(ref: string): RequestBodyObjectResolved {
         const {
             root,
             path,
@@ -143,16 +132,41 @@ export class RefResolver {
             );
         }
 
-        if (!isRequestBodyObject(requestBody)) {
+        if (!isRequestBodyObject(requestBody) && !isReferenceObject(requestBody)) {
             throw new Error(
-                `RefResolver: requestBody resolving failed. Resolved object isn't of type RequestBodyObject. Passed reference: ${ref}`
+                `RefResolver: requestBody resolving failed. Resolved object isn't of type RequestBodyObject or ReferenceObject. Passed reference: ${ref}`
             );
         }
 
         return requestBody;
     }
 
-    public resolveResponse(ref: string): ResponseObject {
+    public resolveRequestBodyDeep(ref: string, limit: number = 100): RequestBodyObject {
+        let counter = 0;
+        let requestBody = this.resolveRequestBody(ref);
+
+        while (counter < limit && isReferenceObject(requestBody)) {
+            requestBody = this.resolveRequestBody(requestBody.$ref);
+
+            counter++;
+        }
+
+        if (counter >= limit) {
+            throw new Error(
+                `RefResolver: requestBody resolving failed. Too many nested references, limit ${limit} exceeded. Passed reference: ${ref}`,
+            );
+        }
+
+        if (isReferenceObject(requestBody)) {
+            throw new Error(
+                `RefResolver: unexpected error, requestBody is reference. Passed reference: ${ref}`,
+            );
+        }
+
+        return requestBody;
+    }
+
+    public resolveResponse(ref: string): ResponseObjectResolved {
         const {
             root,
             path,
@@ -166,13 +180,38 @@ export class RefResolver {
             );
         }
 
-        if (!isResponseObject(response)) {
+        if (!isResponseObject(response) && !isReferenceObject(response)) {
             throw new Error(
-                `RefResolver: response resolving failed. Resolved object isn't of type ResponseObject. Passed reference: ${ref}`
+                `RefResolver: response resolving failed. Resolved object isn't of type ResponseObject or ReferenceObject. Passed reference: ${ref}`
             );
         }
 
         return response;
+    }
+
+    public resolveResponseDeep(ref: string, limit: number = 100): ResponseObject {
+        let counter = 0;
+        let responseObject = this.resolveResponse(ref);
+
+        while (counter < limit && isReferenceObject(responseObject)) {
+            responseObject = this.resolveResponse(responseObject.$ref);
+
+            counter++;
+        }
+
+        if (counter >= limit) {
+            throw new Error(
+                `RefResolver: response resolving failed. Too many nested references, limit ${limit} exceeded. Passed reference: ${ref}`,
+            );
+        }
+
+        if (isReferenceObject(responseObject)) {
+            throw new Error(
+                `RefResolver: unexpected error, response is reference. Passed reference: ${ref}`,
+            );
+        }
+
+        return responseObject;
     }
 
     public resolveSchema(ref: string): SchemaEntry {
