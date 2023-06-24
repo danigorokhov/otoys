@@ -4,6 +4,8 @@ import { beforeEach, expect, describe, jest, it } from '@jest/globals';
 
 import { nodesMock, typesMock } from './__mocks__/ast';
 import { Printer } from './Printer';
+import { Registry } from './Registry';
+import { Config } from './Config';
 
 jest.mock('fs/promises');
 const mkdirMock = mkdir as jest.Mocked<typeof mkdir>;
@@ -13,8 +15,17 @@ jest.mock('path');
 const resolveMock = resolve as jest.Mocked<typeof resolve>;
 
 describe('Printer', () => {
+    let registry: Registry;
+
     beforeEach(() => {
         jest.clearAllMocks();
+
+        registry = new Registry({
+            config: new Config({
+                output: 'src/types',
+                document: { type: 'local', path: '' },
+            }),
+        });
     });
 
     describe('resolveOutputDir', () => {
@@ -23,7 +34,7 @@ describe('Printer', () => {
 
             resolveMock.mockImplementationOnce((...paths) => paths.join('/'));
 
-            const printer = new Printer('src/types');
+            const printer = new Printer(registry);
             const receivedPath = printer.resolveOutputDir();
 
             expect(resolveMock).toBeCalledTimes(1);
@@ -35,7 +46,7 @@ describe('Printer', () => {
 
     describe('print', () => {
         it('should resolve path to schema file output', async() => {
-            const printer = new Printer('src/types');
+            const printer = new Printer(registry);
 
             jest.spyOn(printer, 'resolveOutputDir').mockReturnValue('/cwd/src/types');
 
@@ -46,7 +57,7 @@ describe('Printer', () => {
         });
 
         it('should create directory to schema output', async() => {
-            const printer = new Printer('src/types');
+            const printer = new Printer(registry);
 
             jest.spyOn(printer, 'resolveOutputDir').mockReturnValue('/cwd/src/types');
 
@@ -57,7 +68,7 @@ describe('Printer', () => {
         });
 
         it('should print schema in file', async() => {
-            const printer = new Printer('src/types');
+            const printer = new Printer(registry);
 
             resolveMock.mockReturnValue('/cwd/src/types/index.ts');
 

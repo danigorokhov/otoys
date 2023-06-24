@@ -313,9 +313,6 @@ export class ASTBuilderTypes {
 
         const nodes = schemasToGenerate.map(schema => this.buildTypeAliasDeclaration(schema));
 
-        return factory.createNodeArray(
-            nodes,
-            true, // TODO check if it useful
-        );
+        return factory.createNodeArray(nodes);
     }
 }
