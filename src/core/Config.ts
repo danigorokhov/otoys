@@ -1,3 +1,5 @@
+import { DocumentType } from './types/document';
+
 type DocumentRemote = {
     type: 'remote';
     url: string;
@@ -6,8 +8,17 @@ type DocumentLocal = {
     type: 'local';
     path: string;
 };
+type DocumentInline = {
+    type: 'inline';
+    content: string;
+    documentType: DocumentType;
+};
 
-type Document = DocumentRemote | DocumentLocal;
+type Document =
+    | DocumentRemote
+    | DocumentLocal
+    | DocumentInline
+;
 
 export type ConfigOptions = {
     document: Document;
