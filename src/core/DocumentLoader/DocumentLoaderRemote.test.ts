@@ -50,4 +50,30 @@ describe('DocumentLoader -> DocumentLoaderRemote', () => {
         expect(validateMock).toBeCalledTimes(1);
         expect(validateMock).toBeCalledWith({ openapi: '3.0.1', info: {}, paths: {} });
     });
+
+    it('should return validated document', async () => {
+        const documentValidated = {
+            openapi: '3.0.0',
+            info: {
+                version: 'Version',
+                title: 'Title',
+            },
+            paths: {},
+        };
+
+        validateMock.mockReturnValueOnce(documentValidated);
+
+        const documentLoader = new DocumentLoaderRemote({ url: 'https://some.host/path' });
+
+        const document = await documentLoader.load();
+
+        expect(document).toStrictEqual({
+            openapi: '3.0.0',
+            info: {
+                version: 'Version',
+                title: 'Title',
+            },
+            paths: {},
+        });
+    });
 });
