@@ -27,8 +27,8 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
                     },
                 },
                 responses: {
-                    TestResponses: {
-                        description: 'TestResponses',
+                    TestResponse: {
+                        description: 'TestResponse',
                     },
                 },
                 schemas: {
@@ -182,17 +182,17 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
         it.todo('should throw if resolved object isn\'t RequestBodyObject');
     });
 
-    describe('resolveResponses', () => {
+    describe('resolveResponse', () => {
         it('should resolve object by reference', () => {
-            const ref = '#/components/responses/TestResponses';
+            const ref = '#/components/responses/TestResponse';
 
             jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
                 root: document,
-                path: ['components', 'responses', 'TestResponses'],
+                path: ['components', 'responses', 'TestResponse'],
             });
 
-            expect(resolver.resolveResponses(ref)).toStrictEqual({
-                description: 'TestResponses',
+            expect(resolver.resolveResponse(ref)).toStrictEqual({
+                description: 'TestResponse',
             });
         });
 
@@ -205,13 +205,13 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             });
 
             expect(
-                () => resolver.resolveResponses(ref),
+                () => resolver.resolveResponse(ref),
             ).toThrow(
-                'RefResolver: responses resolving failed. Cannot resolve object by passed reference. Passed reference: #/invalid/ref',
+                'RefResolver: response resolving failed. Cannot resolve object by passed reference. Passed reference: #/invalid/ref',
             );
         });
 
-        it.todo('should throw if resolved object isn\'t ResponsesObject');
+        it.todo('should throw if resolved object isn\'t ResponseObject');
     });
 
     describe('resolveSchema', () => {

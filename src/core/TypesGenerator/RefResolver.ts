@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import {
     OpenAPIObject,
-    ResponsesObject,
+    ResponseObject,
     RequestBodyObject,
     PathItemObject,
 } from 'openapi3-ts/oas30';
@@ -9,7 +9,7 @@ import get from 'lodash/get';
 
 import {
     isPathItemObject,
-    isResponsesObject,
+    isResponseObject,
     isRequestBodyObject,
     isSchemaObject,
 } from '../utils/typePredicates';
@@ -31,6 +31,7 @@ const validateSchemaName: ValidateSchemaName = name => {
     }
 }
 
+// TODO support all cases from guide https://swagger.io/docs/specification/using-ref/
 export class RefResolver {
     constructor(private document: OpenAPIObject) {}
 
@@ -92,6 +93,7 @@ export class RefResolver {
     }
 
     // TODO support refs to document.paths['/path/with/slashes/inside']
+    // https://swagger.io/docs/specification/using-ref/
     public resolvePath(ref: string): PathItemObject {
         const {
             root,
@@ -138,27 +140,27 @@ export class RefResolver {
         return requestBody;
     }
 
-    public resolveResponses(ref: string): ResponsesObject {
+    public resolveResponse(ref: string): ResponseObject {
         const {
             root,
             path,
         } = this.parseRef(ref);
 
-        const responses: unknown = get(root, path, null);
+        const response: unknown = get(root, path, null);
 
-        if (responses === null) {
+        if (response === null) {
             throw new Error(
-                `RefResolver: responses resolving failed. Cannot resolve object by passed reference. Passed reference: ${ref}`
+                `RefResolver: response resolving failed. Cannot resolve object by passed reference. Passed reference: ${ref}`
             );
         }
 
-        if (!isResponsesObject(responses)) {
+        if (!isResponseObject(response)) {
             throw new Error(
-                `RefResolver: responses resolving failed. Resolved object isn't of type ResponsesObject. Passed reference: ${ref}`
+                `RefResolver: response resolving failed. Resolved object isn't of type ResponseObject. Passed reference: ${ref}`
             );
         }
 
-        return responses;
+        return response;
     }
 
     public resolveSchema(ref: string): SchemaEntry {

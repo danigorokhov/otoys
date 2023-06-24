@@ -1,5 +1,5 @@
 import {
-    ResponsesObject,
+    ResponseObject,
     RequestBodyObject,
     PathItemObject,
     SchemaObject,
@@ -16,14 +16,15 @@ export const isPathItemObject = (path: unknown): path is PathItemObject => {
 export const isRequestBodyObject = (requestBody: unknown): requestBody is RequestBodyObject => {
     return (
         typeof requestBody === 'object' && requestBody !== null &&
-        'content' in requestBody
+        'content' in requestBody && typeof requestBody.content === 'object' && requestBody.content !== null
     );
 };
 
 // TODO deep validation
-export const isResponsesObject = (responses: unknown): responses is ResponsesObject => {
+export const isResponseObject = (response: unknown): response is ResponseObject => {
     return (
-        typeof responses === 'object' && responses !== null
+        typeof response === 'object' && response !== null &&
+        'description' in response && typeof response.description === 'string'
     );
 };
 
