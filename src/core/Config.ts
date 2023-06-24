@@ -21,11 +21,11 @@ type DocumentLoader =
 ;
 
 type OutputLocal = {
-    type: 'Local',
+    type: 'local',
     path: string;
 };
 type OutputInline = {
-    type: 'Inline',
+    type: 'inline',
 };
 
 type Output =

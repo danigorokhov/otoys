@@ -66,7 +66,7 @@
                         },
                         "type": {
                             "enum": [
-                                "Local"
+                                "local"
                             ],
                             "type": "string"
                         }
@@ -77,7 +77,7 @@
                     "properties": {
                         "type": {
                             "enum": [
-                                "Inline"
+                                "inline"
                             ],
                             "type": "string"
                         }
