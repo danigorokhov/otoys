@@ -1,5 +1,8 @@
-import { FastifyPluginAsync } from "fastify";
-import { generateApi } from 'swagger-typescript-api';
+import { FastifyPluginAsync } from 'fastify';
+import { generateApi as swaggerTypescriptApiGenerate } from 'swagger-typescript-api';
+
+// TODO use from node_modules, after publishing @otoys/core
+import { generate as otoysGenerate } from '../core';
 
 export const api: FastifyPluginAsync = async (fastify) => {
     fastify.post(
@@ -12,34 +15,66 @@ export const api: FastifyPluginAsync = async (fastify) => {
                         document: {
                             type: 'string',
                         },
+                        generatorType: {
+                            type: 'string',
+                            enum: [
+                                'otoys',
+                                'swagger-typescript-api',
+                            ],
+                        },
                         generatorSettings: {
                             type: 'object',
                             properties: {
                                 pathWhitelist: {
                                     type: 'string',
                                 },
+                                typeSuffix: {
+                                    type: 'string',
+                                },
                             },
-                            required: [
-                                'pathWhitelist',
-                            ],
                         },
                     },
                     required: [
                         'document',
+                        'generatorType',
                     ],
                 },
             },
         },
         async (_request, reply) => {
-            const body = _request.body as { document: string, generatorSettings: { pathWhitelist?: string } }; // TODO common type
+            const { document, generatorType, generatorSettings } = _request.body as {
+                document: string;
+                generatorType: 'otoys' | 'swagger-typescript-api';
+                generatorSettings: {
+                    // otoys
+                    pathWhitelist?: string;
+                    // swagger-typescript-api
+                    typeSuffix?: string;
+                };
+            }; // TODO common type (see client/@types)
 
-            const generatedCode = await generateApi({
-                spec: JSON.parse(body.document),
-                generateClient: false,
-                typeSuffix: body.generatorSettings.pathWhitelist,
-            });
+            let result: string;
+            if (generatorType === 'swagger-typescript-api') {
+                const generatedCode = await swaggerTypescriptApiGenerate({
+                    spec: JSON.parse(document), // TODO support yaml
+                    generateClient: false,
+                    typeSuffix: generatorSettings.typeSuffix,
+                });
 
-            const { content: result } = generatedCode.files[0];
+                result = generatedCode.files[0].content;
+            } else {
+                result = await otoysGenerate({
+                    documentLoader: {
+                        type: 'inline',
+                        documentType: 'json', // TODO support yaml
+                        content: document,
+                    },
+                    output: {
+                        type: 'inline'
+                    },
+                    pathWhitelist: generatorSettings.pathWhitelist,
+                });
+            }
 
             reply
                 .code(200)
