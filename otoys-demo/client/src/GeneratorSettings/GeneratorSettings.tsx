@@ -1,13 +1,19 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect, useMemo} from 'react';
 import { GeneratorSettingsProps, HandleChange, GeneratorSettingsValues } from './GeneratorSettings.types';
 import {cn} from './GeneratorSettings.cn';
 import './GeneratorSettings.css';
-import { Text, TextInput } from '@gravity-ui/uikit';
+import {
+    ControlGroupOption,
+    RadioButton,
+    Text,
+    TextInput,
+} from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import {useUnit} from 'effector-react';
+import { useI18n } from '../utils/i18n';
 import {$generatorSettings, generatorSettingsSet} from './GeneratorSettings.models';
 import { getI18nKeysetFn } from './GeneratorSettings.i18n';
-import { useI18n } from '../utils/i18n';
+import { TYPE_OTOYS, TYPE_SWAGGER_TYPESCRIPT_API } from './GeneratorSettings.const';
 
 import './GeneratorSettings.models/init';
 
@@ -17,6 +23,17 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
     } = props;
 
     const { i18n } = useI18n(getI18nKeysetFn);
+
+    const typeOptions: ControlGroupOption[] = useMemo(() => [
+        {
+            content: 'otoys',
+            value: TYPE_OTOYS,
+        },
+        {
+            content: 'swagger-typescript-api',
+            value: TYPE_SWAGGER_TYPESCRIPT_API,
+        },
+    ], []);
 
     const [generatorSettingsValue, setGeneratorSettingsValue] = useUnit([$generatorSettings, generatorSettingsSet]);
 
@@ -33,7 +50,9 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
         return () => subscription.unsubscribe();
     }, [watch, handleChange]);
 
-    const {field} = useController({name: 'pathWhitelist', control});
+    const {field: fieldType} = useController({name: 'type', control});
+    const {field: fieldPathWhitelist} = useController({name: 'pathWhitelist', control});
+    const {field: fieldTypeSuffix} = useController({name: 'typeSuffix', control});
 
     return (
         <form className={cn(null, [className])}>
@@ -42,34 +61,56 @@ export const GeneratorSettings: FC<GeneratorSettingsProps> = props => {
             </Text>
 
             <div className={cn('Field')}>
-                {/* TODO add support of swagger-typescript-api and otoys by radiobutton */}
-                {/* <Text variant="body-2">
-                    Regular expression to filter paths
-                </Text>
-                <TextInput
-                    className={cn('TextInput')}
-                    size="m"
-                    placeholder="^/user"
-                    name={field.name}
-                    value={field.value}
-                    ref={field.ref}
-                    onUpdate={field.onChange}
-                    onBlur={field.onBlur}
-                /> */}
                 <Text variant="body-2">
-                    {i18n('swagger-typescript-api.typeSuffix.label')}
+                    {i18n('field.type.label')}
                 </Text>
-                <TextInput
-                    className={cn('TextInput')}
+                <RadioButton
+                    className={cn('RadioButton')}
                     size="m"
-                    placeholder={i18n('swagger-typescript-api.typeSuffix.placeholder')}
-                    name={field.name}
-                    value={field.value}
-                    ref={field.ref}
-                    onUpdate={field.onChange}
-                    onBlur={field.onBlur}
+                    options={typeOptions}
+                    name={fieldType.name}
+                    value={fieldType.value}
+                    ref={fieldType.ref}
+                    onBlur={fieldType.onBlur}
+                    onUpdate={fieldType.onChange}
                 />
             </div>
+
+            {fieldType.value === TYPE_OTOYS && (
+                <div className={cn('Field')}>
+                    <Text variant="body-2">
+                        {i18n('field.otoys.pathWhitelist.label')}
+                    </Text>
+                    <TextInput
+                        className={cn('TextInput')}
+                        size="m"
+                        placeholder="^/user"
+                        name={fieldPathWhitelist.name}
+                        value={fieldPathWhitelist.value}
+                        ref={fieldPathWhitelist.ref}
+                        onUpdate={fieldPathWhitelist.onChange}
+                        onBlur={fieldPathWhitelist.onBlur}
+                    />
+                </div>
+            )}
+
+            {fieldType.value === TYPE_SWAGGER_TYPESCRIPT_API && (
+                <div className={cn('Field')}>
+                    <Text variant="body-2">
+                        {i18n('field.swagger-typescript-api.typeSuffix.label')}
+                    </Text>
+                    <TextInput
+                        className={cn('TextInput')}
+                        size="m"
+                        placeholder={i18n('field.swagger-typescript-api.typeSuffix.placeholder')}
+                        name={fieldTypeSuffix.name}
+                        value={fieldTypeSuffix.value}
+                        ref={fieldTypeSuffix.ref}
+                        onUpdate={fieldTypeSuffix.onChange}
+                        onBlur={fieldTypeSuffix.onBlur}
+                    />
+                </div>
+            )}
         </form>
     );
 };

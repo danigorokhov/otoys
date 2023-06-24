@@ -13,3 +13,7 @@
 .GeneratorSettings-TextInput {
     max-width: 400px;
 }
+
+.GeneratorSettings-RadioButton {
+    justify-self: start;
+}
