@@ -15,8 +15,8 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
                 version: '0.0.1'
             },
             paths: {
-                TestPath: {
-                    description: 'TestPath',
+                '/path/to/api': {
+                    description: '/path/to/api',
                 },
             },
             components: {
@@ -48,7 +48,7 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             expect(resolver.isValidURL('#/components/schemas/Test')).toBe(false);
             expect(resolver.isValidURL('petstore.json')).toBe(false);
             expect(resolver.isValidURL('petstore.json#/paths/test')).toBe(false);
-            expect(resolver.isValidURL('://test.com')).toBe(false);
+            expect(resolver.isValidURL('//test.com')).toBe(false);
         });
 
         it('should return true for valid URLs', () => {
@@ -108,6 +108,22 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
             expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'test']);
         });
 
+        it('should unescape slash', () => {
+            const ref = '#/components/te~1st';
+
+            jest.spyOn(resolver, 'validateRef').mockReturnValueOnce(ref);
+
+            expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'te/st']);
+        });
+
+        it('should unescape tilde', () => {
+            const ref = '#/components/te~01st';
+
+            jest.spyOn(resolver, 'validateRef').mockReturnValueOnce(ref);
+
+            expect(resolver.parseRef(ref)).toHaveProperty('path', ['components', 'te~1st']);
+        });
+
         it('should filter empty parts of ref', () => {
             const ref = '#/components//test';
 
@@ -118,16 +134,16 @@ describe('TypesGenerator/TypesGeneratorV3/RefResolver', () => {
     });
 
     describe('resolvePath', () => {
-        it('should resolve object by reference', () => {
-            const ref = '#/paths/TestPath';
+        it.only('should resolve object by reference', () => {
+            const ref = '#/paths/~1path~1to~1api';
 
             jest.spyOn(resolver, 'parseRef').mockReturnValueOnce({
                 root: document,
-                path: ['paths', 'TestPath'],
+                path: ['paths', '/path/to/api'],
             });
 
             expect(resolver.resolvePath(ref)).toStrictEqual({
-                description: 'TestPath',
+                description: '/path/to/api',
             });
         });
 

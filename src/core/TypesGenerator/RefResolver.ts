@@ -31,7 +31,11 @@ const validateSchemaName: ValidateSchemaName = name => {
     }
 }
 
+// TODO think of nested refs (inside components.schemas['schema'] there is $ref field)
 // TODO support all cases from guide https://swagger.io/docs/specification/using-ref/
+/**
+ * Resolves objects in document by reference. Reference corresponds RFC3986.
+ */
 export class RefResolver {
     constructor(private document: OpenAPIObject) {}
 
@@ -51,7 +55,7 @@ export class RefResolver {
     }
 
     /**
-     * Validate reference
+     * Validates reference
      * @returns reference in format `#[\w/]+`
      */
     public validateRef(ref: string): string {
@@ -84,7 +88,17 @@ export class RefResolver {
             .substring(1)
             .split('/');
 
-        const path = pathRaw.filter(pathPart => pathPart.length !== 0);
+        // https://swagger.io/docs/specification/using-ref/#escape
+        const pathUnescaped = pathRaw.map(pathPart => {
+            // Order is worth. If tilde is unescaped firstly, it can be created one more '~1' combination.
+            // For instance: '/test~01' becomes '/test/' instead of '/test~1'.
+            const withUnescapedSlash = pathPart.replaceAll('~1', '/');
+            const withUnescapedTilde = withUnescapedSlash.replaceAll('~0', '~');
+
+            return withUnescapedTilde;
+        });
+
+        const path = pathUnescaped.filter(pathPart => pathPart.length !== 0);
 
         return {
             root: this.document,
@@ -92,8 +106,6 @@ export class RefResolver {
         };
     }
 
-    // TODO support refs to document.paths['/path/with/slashes/inside']
-    // https://swagger.io/docs/specification/using-ref/
     public resolvePath(ref: string): PathItemObject {
         const {
             root,

@@ -13,11 +13,9 @@ import {
 import { SchemaName, SchemaEntry } from '../types/schema';
 import { RefResolver } from './RefResolver';
 
-// TODO RefResolver.resolveSchema split into 2 functions — object resolving and name
 // TODO change API of collect() — return { name: SchemaName, object: SchemaObject, meta: { isUnnamed: boolean } }[]
 // TODO flag in config to generate types for UnnamedSchemas
 
-// TODO think of nested refs (inside components.schemas['schema'] there is $ref field)
 // TODO split into different collectors
 export class SchemaCollector {
     unnamedSchemaCounter = 0;
@@ -82,6 +80,8 @@ export class SchemaCollector {
         const operationObjects: OperationObject[] = [];
         let pathItemObjectIndex = 0;
         while (pathItemObjectIndex < pathsItemObjects.length) {
+            // TODO fix openapi3-ts — if $ref defined, other fields will be ignored
+            // https://swagger.io/docs/specification/using-ref/#sibling
             const path = pathsItemObjects[pathItemObjectIndex];
 
             if (isReferenceObject(path)) {
@@ -91,16 +91,16 @@ export class SchemaCollector {
                     pathsSet.add(resolvedPath);
                     pathsItemObjects.push(resolvedPath);
                 }
+            } else {
+                if (path.delete) operationObjects.push(path.delete);
+                if (path.get) operationObjects.push(path.get);
+                if (path.head) operationObjects.push(path.head);
+                if (path.options) operationObjects.push(path.options);
+                if (path.patch) operationObjects.push(path.patch);
+                if (path.post) operationObjects.push(path.post);
+                if (path.put) operationObjects.push(path.put);
+                if (path.trace) operationObjects.push(path.trace);
             }
-
-            if (path.delete) operationObjects.push(path.delete);
-            if (path.get) operationObjects.push(path.get);
-            if (path.head) operationObjects.push(path.head);
-            if (path.options) operationObjects.push(path.options);
-            if (path.patch) operationObjects.push(path.patch);
-            if (path.post) operationObjects.push(path.post);
-            if (path.put) operationObjects.push(path.put);
-            if (path.trace) operationObjects.push(path.trace);
 
             pathItemObjectIndex++;
         }
