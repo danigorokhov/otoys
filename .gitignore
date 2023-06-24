@@ -20,6 +20,8 @@ logs/
 tsconfig.tsbuildinfo
 build/
 
+otoys-demo/server/src/modules/core/
+
 # environment
 .env
 
