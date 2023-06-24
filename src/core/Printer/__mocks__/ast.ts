@@ -72,7 +72,7 @@ export const nodesMock = factory.createNodeArray([
     ),
 ]);
 
-export const typesMock = `export type Tag = {
+export const nodesPrintedMock = `export type Tag = {
     id: number;
     name: string;
 };

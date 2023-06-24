@@ -10,7 +10,7 @@ class TestDocumentLoaderBase extends DocumentLoaderBase {
     }
 }
 
-describe('DocumentLoader -> DocumentLoaderBase', () => {
+describe('DocumentLoader/DocumentLoaderBase', () => {
     it('should provide parse, validate and load methods to derived class', () => {
         const documentLoader = new TestDocumentLoaderBase();
 

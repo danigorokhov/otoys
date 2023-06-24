@@ -2,7 +2,7 @@ import { expect, jest, describe, it } from '@jest/globals';
 
 import { DocumentLoaderInline } from './DocumentLoaderInline';
 
-describe('DocumentLoader -> DocumentLoaderInline', () => {
+describe('DocumentLoader/DocumentLoaderInline', () => {
     const parseMock = jest.spyOn(DocumentLoaderInline, 'parse').mockReturnValueOnce({});
     const validateMock = jest.spyOn(DocumentLoaderInline, 'validate').mockReturnValue({
         openapi: '',

@@ -5,6 +5,9 @@ module.exports = {
         url: 'https://petstore3.swagger.io/api/v3/openapi.json',
         path: './examples/v3/petstore3.json',
     },
-    output: './output',
+    output: {
+        type: 'local',
+        path: './output',
+    },
     pathWhitelist: '^/user',
 };
