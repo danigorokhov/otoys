@@ -2,9 +2,9 @@ import { Config } from './Config';
 import { Registry } from './Registry';
 import { DocumentHandler } from './DocumentHandler';
 import { TypesGeneratorHandler } from './TypesGeneratorHandler';
-import { Printer } from './Printer';
+import { PrinterHandler } from './PrinterHandler';
 
-type Generate = (config: Config) => void;
+type Generate = (config: Config) => Promise<string>;
 
 export const generate: Generate = async config => {
     // TODO to pure config without Registry
@@ -16,6 +16,6 @@ export const generate: Generate = async config => {
     const generator = new TypesGeneratorHandler(registry, document);
     const ast = generator.generate();
 
-    const printer = new Printer(registry);
-    await printer.print(ast);
+    const printer = new PrinterHandler(registry);
+    return await printer.print(ast);
 };
