@@ -1,4 +1,8 @@
-import { SchemaObject, isReferenceObject } from 'openapi3-ts/oas30';
+import {
+    SchemaObject,
+    SchemaObjectType,
+    isReferenceObject,
+} from 'openapi3-ts/oas30';
 import {
     Node,
     NodeArray,
@@ -46,6 +50,18 @@ export class ASTBuilderTypes {
             'Record',
             [key, value],
         );
+    }
+
+    public inferSchemaType(schema: SchemaObject): SchemaObjectType | null {
+        if (schema.items) {
+            return 'array';
+        }
+
+        if (schema.properties) {
+            return 'object';
+        }
+
+        return null;
     }
 
     // TODO extract
@@ -261,6 +277,14 @@ export class ASTBuilderTypes {
             });
 
             node = factory.createIntersectionTypeNode(nodesAllOf);
+        }
+
+        const schemaTypeInfered = this.inferSchemaType(schema);
+        if (!node && schemaTypeInfered) {
+            return this.buildTypeNode({
+                ...schema,
+                type: schemaTypeInfered,
+            });
         }
 
         // TODO in docs, that otoys doesn't support schema.not
