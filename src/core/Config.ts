@@ -14,25 +14,25 @@ type DocumentInline = {
     documentType: DocumentType;
 };
 
-type Document =
+type DocumentLoader =
     | DocumentRemote
     | DocumentLocal
     | DocumentInline
 ;
 
 export type ConfigOptions = {
-    document: Document;
+    documentLoader: DocumentLoader;
     output: string;
     pathWhitelist?: string;
 };
 
 export class Config {
-    public document: Document;
+    public documentLoader: DocumentLoader;
     public output: string;
     public pathWhitelist?: string;
 
     constructor(configOptions: ConfigOptions) {
-        this.document = configOptions.document;
+        this.documentLoader = configOptions.documentLoader;
         this.output = configOptions.output;
         this.pathWhitelist = configOptions.pathWhitelist;
     }
