@@ -1,13 +1,15 @@
 import React, {FC, useCallback, useEffect} from 'react';
+import {useUnit} from 'effector-react';
 import { SwaggerDocumentEditorProps, HandleChange } from './SwaggerDocumentEditor.types';
 import {cn} from './SwaggerDocumentEditor.cn';
 import { CodeEditor } from '../CodeEditor';
 import './SwaggerDocumentEditor.css';
-import SWAGGER_DOCUMENT_DEFAULT_VALUE from './SwaggerDocumentEditor.assets/petstore3.json';
-
-import {useUnit} from 'effector-react';
-import './SwaggerDocumentEditor.models/init';
+import petstore3 from './SwaggerDocumentEditor.assets/petstore3.json';
 import { $swaggerDocument, swaggerDocumentInitialized, swaggerDocumentChanged, $isSwaggerDocumentInitialized } from './SwaggerDocumentEditor.models';
+import { useUserMeta } from '../utils/userMeta';
+import './SwaggerDocumentEditor.models/init';
+
+const SWAGGER_DOCUMENT_DEFAULT_VALUE = JSON.stringify(petstore3, null, 4);
 
 export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
     const {
@@ -23,6 +25,9 @@ export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
         setSwaggerDocument(value || '');
     }, [setSwaggerDocument]);
 
+    const userMeta = useUserMeta();
+    const swaggerDocumentInitialValue = userMeta?.document.content || SWAGGER_DOCUMENT_DEFAULT_VALUE;
+
     const [
         isSwaggerDocumentInitialized,
         setSwaggerDocumentInitialized,
@@ -31,9 +36,9 @@ export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
     useEffect(() => {
         if (isSwaggerDocumentInitialized) return;
 
-        setSwaggerDocument(JSON.stringify(SWAGGER_DOCUMENT_DEFAULT_VALUE, null, 4));
+        setSwaggerDocument(swaggerDocumentInitialValue);
         setSwaggerDocumentInitialized(true);
-    }, [isSwaggerDocumentInitialized, setSwaggerDocument, setSwaggerDocumentInitialized]);
+    }, [isSwaggerDocumentInitialized, setSwaggerDocument, setSwaggerDocumentInitialized, swaggerDocumentInitialValue]);
 
     return (
         <CodeEditor

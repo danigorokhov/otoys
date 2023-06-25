@@ -4,3 +4,8 @@
     display: grid;
     grid-template-rows: auto 1fr;
 }
+
+.App_loading {
+    grid-template-rows: 1fr;
+    place-items: center;
+}

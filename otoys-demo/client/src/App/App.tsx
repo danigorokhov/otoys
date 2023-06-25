@@ -1,27 +1,38 @@
-import React, { FC } from 'react';
-import {fork} from 'effector';
-import {Provider as ScopeProvider} from 'effector-react';
+import React, { FC, useEffect } from 'react';
+import { useUnit } from 'effector-react';
+import { Loader } from '@gravity-ui/uikit';
 import {cn} from './App.cn';
-import {ThemeProvider} from '../ThemeProvider';
 import {Header} from '../Header';
 import {Playground} from '../Playground';
+import { $fetchUserMetaStatus, fetchUserMetaFx } from '../utils/userMeta';
 import './App.css';
 import '../utils/i18n/i18n.models/init';
-
-const scopeRoot = fork();
+import '../utils/userMeta/userMeta.models/init';
 
 export const App: FC = () => {
+    const [fetchUserMetaStatus, fetchUserMeta] = useUnit([$fetchUserMetaStatus, fetchUserMetaFx]);
+
+    useEffect(() => {
+        fetchUserMeta();
+    }, [fetchUserMeta]);
+
+    const isSuccess = fetchUserMetaStatus === 'done';
+    const isLoading = fetchUserMetaStatus === 'pending';
+
     return (
-        <ScopeProvider value={scopeRoot}>
-            <ThemeProvider>
-                <div className={cn()}>
+        <div className={cn({ loading: isLoading })}>
+            {isSuccess && (
+                <>
                     <Header />
                     <Playground />
                     {/*
                     <FeedbackControl />
                     */}
-                </div>
-            </ThemeProvider>
-        </ScopeProvider>
+                </>
+            )}
+            {isLoading && (
+                <Loader size="m" />
+            )}
+        </div>
     );
 };
