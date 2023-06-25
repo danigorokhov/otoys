@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useUnit } from 'effector-react';
 import { Loader } from '@gravity-ui/uikit';
 import {cn} from './App.cn';
@@ -11,9 +11,13 @@ import '../utils/userMeta/userMeta.models/init';
 
 export const App: FC = () => {
     const [fetchUserMetaStatus, fetchUserMeta] = useUnit([$fetchUserMetaStatus, fetchUserMetaFx]);
+    const isInited = useRef(false);
 
     useEffect(() => {
-        fetchUserMeta();
+        if (!isInited.current) {
+            fetchUserMeta();
+        }
+        isInited.current = true;
     }, [fetchUserMeta]);
 
     const isSuccess = fetchUserMetaStatus === 'done';
