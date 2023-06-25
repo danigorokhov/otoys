@@ -1,0 +1,1 @@
+export { YIdAuthControl } from './YIdAuthControl';

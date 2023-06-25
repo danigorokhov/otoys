@@ -1,0 +1,10 @@
+/* TODO use UserId from Y instead */
+.YIdAuthControl-UserId {
+    width: 36px;
+    height: 36px;
+    background-image: url('https://avatars.mds.yandex.net/get-yapic/0/0-0/islands-retina-middle'), url('./YIdAuthControl.assets/user-id-background.svg');
+    background-size: 30px, auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(0.9);
+}
