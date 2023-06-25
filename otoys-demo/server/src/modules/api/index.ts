@@ -16,12 +16,16 @@ export const api: FastifyPluginAsync = async (fastify) => {
     fastify.get(
         '/api/meta',
         async (_request, reply) => {
+            const client = await fastify.pg.connect();
+
             const userMeta: MetaDto = {
                 id: 1,
                 document: {
                     content: JSON.stringify(petstore3, null, 4),
                 },
             };
+
+            client.release();
 
             reply
                 .code(200)
