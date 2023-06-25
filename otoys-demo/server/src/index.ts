@@ -1,24 +1,28 @@
 import Fastify from 'fastify';
-import cors from '@fastify/cors';
 
+import { registerEnv } from './modules/env';
+import {registerCors} from './modules/cors';
 import {ping} from './modules/ping';
 import {api} from './modules/api';
-
-const PORT = 3030;
 
 const fastify = Fastify({
     logger: true, // TODO change depends on NODE_ENVIRONMENT
 });
 
-fastify.register(cors, {
-    origin: [/local\.otoys\.tech$/],
-});
-fastify.register(ping);
-fastify.register(api);
+const initialize = async () => {
+    // Wait env config loading, it's using in next registers
+    await registerEnv(fastify);
+
+    registerCors(fastify);
+
+    fastify.register(ping);
+    fastify.register(api);
+};
 
 const start = async () => {
     try {
-        await fastify.listen({ port: PORT });
+        await initialize();
+        await fastify.listen({ port: fastify.config.PORT });
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
