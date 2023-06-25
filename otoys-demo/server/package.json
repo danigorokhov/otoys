@@ -5,8 +5,9 @@
   "scripts": {
     "build": "tsc && build:core",
     "build:core": "rm -rf src/modules/core && cd ../../ && npm run build && cp -R build/core otoys-demo/server/src/modules/core",
+    "build:examples": "rm -rf src/examples && cd ../../ && cp -R examples otoys-demo/server/src/examples",
     "start": "node ./src/index.js",
-    "start:watch": "npm run build:core && nodemon ./src/index.ts"
+    "start:watch": "npm run build:core && npm run build:examples && nodemon ./src/index.ts"
   },
   "dependencies": {
     "@fastify/cors": "^8.2.1",

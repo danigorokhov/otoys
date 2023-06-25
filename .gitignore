@@ -21,6 +21,7 @@ tsconfig.tsbuildinfo
 build/
 
 otoys-demo/server/src/modules/core/
+otoys-demo/server/src/examples/
 
 # environment
 .env
