@@ -10,7 +10,7 @@ type MetaDto = {
     document: {
         content: string;
     };
-} | {};
+} | null;
 
 export const api: FastifyPluginAsync = async (fastify) => {
     fastify.get(
