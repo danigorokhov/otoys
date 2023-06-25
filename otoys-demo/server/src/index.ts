@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 
 import { registerEnv } from './modules/env';
+import {registerDbConnection} from './modules/dbConnection';
 import {registerCors} from './modules/cors';
 import {ping} from './modules/ping';
 import {api} from './modules/api';
@@ -13,6 +14,7 @@ const initialize = async () => {
     // Wait env config loading, it's using in next registers
     await registerEnv(fastify);
 
+    registerDbConnection(fastify);
     registerCors(fastify);
 
     fastify.register(ping);
