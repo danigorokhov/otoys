@@ -20,7 +20,7 @@ type ApiGenerateResponse = {
 };
 
 export const loadGeneratorResultFx = createEffect<LoadGeneratorResultFx>(async params => {
-    const response = await fetch('http://localhost:3030/api/generate', { // TODO to config.server.origin
+    const response = await fetch('/api/generate', {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
