@@ -6,7 +6,7 @@ import {WatchObserver} from 'react-hook-form';
 export type EditorSettingsProps = PropsWithChildren<{}> & ClassNameProps;
 
 export type EditorSettingsValues = {
-    language: typeof LANGUAGE_JSON | typeof LANGUAGE_YAML;
+    language: typeof LANGUAGE_JSON | typeof LANGUAGE_YAML; // TODO merge with type from SwaggerDocumentEditor
 };
 
 export type HandleChange = WatchObserver<EditorSettingsValues>;

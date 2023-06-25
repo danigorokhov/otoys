@@ -1,12 +1,16 @@
 import React, {FC, useCallback, useEffect, useMemo} from 'react';
 import { EditorSettingsProps, EditorSettingsValues, HandleChange } from './EditorSettings.types';
-import {LANGUAGE_JSON, LANGUAGE_YAML, EDITOR_SETTINGS_DEFAULT_VALUES} from './EditorSettings.const';
+import {LANGUAGE_JSON, LANGUAGE_YAML} from './EditorSettings.const';
 import {cn} from './EditorSettings.cn';
 import './EditorSettings.css';
 import { RadioButton, Text, ControlGroupOption } from '@gravity-ui/uikit';
 import {useForm, useController} from 'react-hook-form';
 import { getI18nKeysetFn } from './EditorSettings.i18n';
 import { useI18n } from '../utils/i18n';
+import { useUnit } from 'effector-react';
+import { $editorSettings, editorSettingsChanged } from './EditorSettings.models';
+
+import './EditorSettings.models/init';
 
 export const EditorSettings: FC<EditorSettingsProps> = props => {
     const {
@@ -26,14 +30,20 @@ export const EditorSettings: FC<EditorSettingsProps> = props => {
         },
     ], [i18n]);
 
+    const [editorSettings, setEditorSettings] = useUnit([$editorSettings, editorSettingsChanged]);
+
     const {control, watch} = useForm<EditorSettingsValues>({
-        defaultValues: EDITOR_SETTINGS_DEFAULT_VALUES,
+        defaultValues: editorSettings,
     });
 
-    const handleChange = useCallback<HandleChange>(_formValues => {
-        console.log(_formValues);
-        // TODO handle _formValues of editor settings
-    }, []);
+    const handleChange = useCallback<HandleChange>(formValues => {
+        // TODO validate
+        if (formValues.language) {
+            setEditorSettings({
+                language: formValues.language,
+            });
+        }
+    }, [setEditorSettings]);
 
     useEffect(() => {
         const subscription = watch(handleChange);

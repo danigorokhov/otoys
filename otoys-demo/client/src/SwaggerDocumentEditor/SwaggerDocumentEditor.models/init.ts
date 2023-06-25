@@ -1,5 +1,5 @@
 import {sample} from 'effector';
-import {$swaggerDocument, swaggerDocumentInitialized, swaggerDocumentChanged, $isSwaggerDocumentInitialized} from '.';
+import {$swaggerDocument, swaggerDocumentInitialized, swaggerDocumentChanged, $isSwaggerDocumentInitialized, $editorLang, editorLangChanged} from '.';
 
 sample({
     clock: swaggerDocumentChanged,
@@ -9,4 +9,9 @@ sample({
 sample({
     clock: swaggerDocumentInitialized,
     target: $isSwaggerDocumentInitialized,
+});
+
+sample({
+    clock: editorLangChanged,
+    target: $editorLang,
 });
