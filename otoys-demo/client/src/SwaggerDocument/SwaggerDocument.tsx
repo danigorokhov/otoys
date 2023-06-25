@@ -11,6 +11,8 @@ import {LoadDocumentForm} from '../LoadDocumentForm';
 import { getI18nKeysetFn } from './SwaggerDocument.i18n';
 import { useI18n } from '../utils/i18n';
 
+import './SwaggerDocument.models/init';
+
 export const SwaggerDocument: FC<SwaggerDocumentProps> = props => {
     const {
         className,

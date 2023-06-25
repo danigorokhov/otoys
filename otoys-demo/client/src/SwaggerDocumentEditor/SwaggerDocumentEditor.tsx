@@ -5,7 +5,7 @@ import {cn} from './SwaggerDocumentEditor.cn';
 import { CodeEditor } from '../CodeEditor';
 import './SwaggerDocumentEditor.css';
 import petstore3 from './SwaggerDocumentEditor.assets/petstore3.json';
-import { $swaggerDocument, swaggerDocumentInitialized, swaggerDocumentChanged, $isSwaggerDocumentInitialized } from './SwaggerDocumentEditor.models';
+import { $swaggerDocument, swaggerDocumentInitialized, swaggerDocumentChanged, $isSwaggerDocumentInitialized, $editorLang } from './SwaggerDocumentEditor.models';
 import { useUserMeta } from '../utils/userMeta';
 import './SwaggerDocumentEditor.models/init';
 
@@ -40,10 +40,12 @@ export const SwaggerDocumentEditor: FC<SwaggerDocumentEditorProps> = props => {
         setSwaggerDocumentInitialized(true);
     }, [isSwaggerDocumentInitialized, setSwaggerDocument, setSwaggerDocumentInitialized, swaggerDocumentInitialValue]);
 
+    const [editorLang] = useUnit([$editorLang]);
+
     return (
         <CodeEditor
             className={cn(null, [className])}
-            language="json" // TODO support yaml
+            language={editorLang}
             value={swaggerDocument}
             onChange={handleChange}
             path="swaggerDocument.json"

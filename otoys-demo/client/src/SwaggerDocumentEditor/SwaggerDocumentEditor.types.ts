@@ -6,3 +6,5 @@ export type SwaggerDocumentEditorProps = PropsWithChildren<{}> & ClassNameProps;
 
 type CodeEditorProps = ComponentProps<typeof CodeEditor>;
 export type HandleChange = Required<CodeEditorProps>['onChange'];
+
+export type EditorLang = 'json' | 'yaml';
