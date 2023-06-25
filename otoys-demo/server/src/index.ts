@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+
 import {ping} from './modules/ping';
 import {api} from './modules/api';
 
@@ -10,7 +11,7 @@ const fastify = Fastify({
 });
 
 fastify.register(cors, {
-    origin: [/^http:\/\/localhost/, /local\.otoys\.tech:3000$/], // TODO add production domain
+    origin: [/local\.otoys\.tech$/],
 });
 fastify.register(ping);
 fastify.register(api);
