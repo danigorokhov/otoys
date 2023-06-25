@@ -1,10 +1,34 @@
 import { FastifyPluginAsync } from 'fastify';
 import { generateApi as swaggerTypescriptApiGenerate } from 'swagger-typescript-api';
 
+import petstore3 from '../../examples/v3/petstore3.json';
 // TODO use from node_modules, after publishing @otoys/core
 import { generate as otoysGenerate } from '../core';
 
+type MetaDto = {
+    id: number;
+    document: {
+        content: string;
+    };
+} | {};
+
 export const api: FastifyPluginAsync = async (fastify) => {
+    fastify.get(
+        '/api/meta',
+        async (_request, reply) => {
+            const userMeta: MetaDto = {
+                id: 1,
+                document: {
+                    content: JSON.stringify(petstore3, null, 4),
+                },
+            };
+
+            reply
+                .code(200)
+                .send(userMeta);
+        },
+    );
+
     fastify.post(
         '/api/generate',
         {
@@ -41,8 +65,8 @@ export const api: FastifyPluginAsync = async (fastify) => {
                 },
             },
         },
-        async (_request, reply) => {
-            const { document, generatorType, generatorSettings } = _request.body as {
+        async (request, reply) => {
+            const { document, generatorType, generatorSettings } = request.body as {
                 document: string;
                 generatorType: 'otoys' | 'swagger-typescript-api';
                 generatorSettings: {
